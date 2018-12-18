@@ -1,0 +1,13 @@
+{
+  "name": "usfs-components",
+  "version": "0.0.1",
+  "description": "Custom components for USFS forms",
+  "main": "index.js",
+  "repository": "https://github.com/cityofaustin/usfs-components",
+  "author": "Brian Smith <briaguya@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.6.3",
+    "react-flatpickr": "^3.6.4"
+  }
+}
