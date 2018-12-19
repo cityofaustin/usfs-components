@@ -9,7 +9,7 @@ import { Button, Welcome } from "@storybook/react/demo";
 
 import DateTimeWidget from "../src/DateTimeWidget";
 import DateTimeReviewWidget from "../src/DateTimeReviewWidget";
-// import LocationPickerWidget from "../src/LocationPickerWidget";
+import LocationPickerWidget from "../src/LocationPickerWidget";
 import LocationReviewWidget from "../src/LocationReviewWidget";
 // import FileUploadWidget from "../src/FileUploadWidget";
 import FileUploadReviewWidget from "../src/FileUploadReviewWidget";
@@ -28,8 +28,8 @@ dateTimeStories
   ));
 
 storiesOf("Location", module)
-  .add("Edit", () => <Welcome showApp={linkTo("Button")} />)
-  .add("Review", () => <Welcome showApp={linkTo("Button")} />);
+  .add("Edit", () => <LocationPickerWidget />)
+  .add("Review", () => <LocationReviewWidget />);
 
 storiesOf("File Upload", module)
   .add("Edit", () => <Welcome showApp={linkTo("Button")} />)

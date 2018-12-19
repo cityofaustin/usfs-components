@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import "./LocationPickerWidget.css";
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -13,12 +14,12 @@ class SelectLocationMap extends Component {
     this.onStyleLoad = this.onStyleLoad.bind(this);
   }
 
-  onStyleLoad({ map }) {
+  onStyleLoad(map) {
     map.resize();
   }
 
   render() {
-    const { lat, lng, crossingMoved } = this.props;
+    const { lat, lng } = this.props;
     return (
       <Map
         style={"mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r"}
@@ -36,7 +37,7 @@ class SelectLocationMap extends Component {
           <Feature
             coordinates={[lng, lat]}
             draggable={true}
-            onDragEnd={crossingMoved}
+            // onDragEnd={crossingMoved}
           />
         </Layer>
       </Map>
