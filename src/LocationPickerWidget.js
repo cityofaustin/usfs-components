@@ -70,7 +70,7 @@ export default class LocationPickerWidget extends React.Component {
       <div>
         <h1>{this.state.address}</h1>
         <div>
-          <SelectLocationMap />
+          <SelectLocationMap lat={0} lng={0} />
         </div>
       </div>
     );
