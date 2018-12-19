@@ -30,16 +30,13 @@ dateTimeStories
 const locationStories = storiesOf("Location", module);
 locationStories.addDecorator(withKnobs);
 
+const locationJSON = JSON.stringify({
+  address: "800 Guadalupe St, Austin, TX 78701",
+  position: { lat: 30.271272, lng: -97.745934 }
+});
+
 locationStories
-  .add("Edit", () => (
-    <LocationPickerWidget
-      address={text("Address", "800 Guadalupe St, Austin, TX 78701")}
-      position={{
-        lat: number("Lat", 30.271272),
-        lng: number("Lng", -97.745934)
-      }}
-    />
-  ))
+  .add("Edit", () => <LocationPickerWidget value={locationJSON} />)
   .add("Review", () => <LocationReviewWidget />);
 
 storiesOf("File Upload", module)

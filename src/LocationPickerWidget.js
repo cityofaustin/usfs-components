@@ -37,7 +37,7 @@ class SelectLocationMap extends Component {
           <Feature
             coordinates={[lng, lat]}
             draggable={true}
-            // onDragEnd={crossingMoved}
+            onDragEnd={this.props.locationUpdated}
           />
         </Layer>
       </Map>
@@ -49,20 +49,22 @@ export default class LocationPickerWidget extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      address: props.address,
-      position: {
-        lat: props.position.lat,
-        lng: props.position.lng
-      }
-    };
+    const state = JSON.parse(props.value);
+    this.state = state;
 
-    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.locationUpdated = this.locationUpdated.bind(this);
   }
 
-  handleLocationChange({ position, address }) {
-    // Set new location
-    this.setState({ position, address });
+  locationUpdated({ lngLat }) {
+    const state = {
+      address: "Dropped Pin",
+      position: lngLat
+    };
+
+    const valueJSON = JSON.stringify(state);
+
+    this.props.onChange(valueJSON);
+    this.setState(state);
   }
 
   render() {
@@ -73,6 +75,7 @@ export default class LocationPickerWidget extends React.Component {
           <SelectLocationMap
             lat={this.state.position.lat}
             lng={this.state.position.lng}
+            locationUpdated={this.locationUpdated}
           />
         </div>
       </div>
