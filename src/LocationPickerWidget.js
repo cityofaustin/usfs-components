@@ -48,8 +48,9 @@ class SelectLocationMap extends Component {
 export default class LocationPickerWidget extends React.Component {
   constructor(props) {
     super(props);
+    const valueJSON = props.value ? props.value : props.schema.formData;
 
-    const state = JSON.parse(props.value);
+    const state = JSON.parse(valueJSON);
     this.state = state;
 
     this.locationUpdated = this.locationUpdated.bind(this);
