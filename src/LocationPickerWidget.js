@@ -50,12 +50,11 @@ export default class LocationPickerWidget extends React.Component {
     super(props);
 
     this.state = {
-      address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
+      address: props.address,
       position: {
-        lat: 0,
-        lng: 0
-      },
-      val: "blarg"
+        lat: props.position.lat,
+        lng: props.position.lng
+      }
     };
 
     this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -71,7 +70,10 @@ export default class LocationPickerWidget extends React.Component {
       <div>
         <h1>{this.state.address}</h1>
         <div>
-          <SelectLocationMap lat={0} lng={0} />
+          <SelectLocationMap
+            lat={this.state.position.lat}
+            lng={this.state.position.lng}
+          />
         </div>
       </div>
     );

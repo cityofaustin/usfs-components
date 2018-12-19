@@ -27,8 +27,19 @@ dateTimeStories
     <DateTimeReviewWidget value={text("Date/Time", "2011-11-11 11:11 PM")} />
   ));
 
-storiesOf("Location", module)
-  .add("Edit", () => <LocationPickerWidget />)
+const locationStories = storiesOf("Location", module);
+locationStories.addDecorator(withKnobs);
+
+locationStories
+  .add("Edit", () => (
+    <LocationPickerWidget
+      address={text("Address", "800 Guadalupe St, Austin, TX 78701")}
+      position={{
+        lat: number("Lat", 30.271272),
+        lng: number("Lng", -97.745934)
+      }}
+    />
+  ))
   .add("Review", () => <LocationReviewWidget />);
 
 storiesOf("File Upload", module)
