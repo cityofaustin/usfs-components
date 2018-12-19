@@ -7,7 +7,7 @@ import { linkTo } from "@storybook/addon-links";
 
 import { Button, Welcome } from "@storybook/react/demo";
 
-// import DateTimeWidget from "../src/DateTimeWidget";
+import DateTimeWidget from "../src/DateTimeWidget";
 import DateTimeReviewWidget from "../src/DateTimeReviewWidget";
 // import LocationPickerWidget from "../src/LocationPickerWidget";
 import LocationReviewWidget from "../src/LocationReviewWidget";
@@ -20,7 +20,7 @@ const dateTimeStories = storiesOf("Date Time", module);
 dateTimeStories.addDecorator(withKnobs);
 
 dateTimeStories
-  .add("Edit", () => <Welcome showApp={linkTo("Button")} />)
+  .add("Edit", () => <DateTimeWidget />)
   .add("Review", () => (
     <DateTimeReviewWidget value={text("Date/Time", "11/11/2011 11:11 PM")} />
   ));
