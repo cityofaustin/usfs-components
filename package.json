@@ -1,5 +1,5 @@
 {
-  "name": "usfs-components",
+  "name": "@cityofaustin/usfs-components",
   "version": "0.0.1",
   "description": "Custom components for USFS forms",
   "main": "index.js",
