@@ -20,9 +20,11 @@ const dateTimeStories = storiesOf("Date Time", module);
 dateTimeStories.addDecorator(withKnobs);
 
 dateTimeStories
-  .add("Edit", () => <DateTimeWidget />)
+  .add("Edit", () => (
+    <DateTimeWidget value={text("Date/Time", "2011-11-11 11:11 PM")} />
+  ))
   .add("Review", () => (
-    <DateTimeReviewWidget value={text("Date/Time", "11/11/2011 11:11 PM")} />
+    <DateTimeReviewWidget value={text("Date/Time", "2011-11-11 11:11 PM")} />
   ));
 
 storiesOf("Location", module)
