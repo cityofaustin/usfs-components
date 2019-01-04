@@ -52,9 +52,11 @@ locationStories
     ),
     { knobs: { escapeHTML: false } }
   )
-  .add("Review", () => (
-    <LocationReviewWidget value={text("Location", locationJSON)} />
-  ));
+  .add(
+    "Review",
+    () => <LocationReviewWidget value={text("Location", locationJSON)} />,
+    { knobs: { escapeHTML: false } }
+  );
 
 storiesOf("File Upload", module)
   .add("Edit", () => <FileUploadWidget />)
