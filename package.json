@@ -8,8 +8,6 @@
   "license": "MIT",
   "peerDependencies": {},
   "scripts": {
-    "start": "webpack --watch",
-    "build": "webpack",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs"
   },
