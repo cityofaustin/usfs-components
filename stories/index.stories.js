@@ -11,7 +11,7 @@ import DateTimeWidget from "../src/DateTimeWidget";
 import DateTimeReviewWidget from "../src/DateTimeReviewWidget";
 import LocationPickerWidget from "../src/LocationPickerWidget";
 import LocationReviewWidget from "../src/LocationReviewWidget";
-// import FileUploadWidget from "../src/FileUploadWidget";
+import FileUploadWidget from "../src/FileUploadWidget";
 import FileUploadReviewWidget from "../src/FileUploadReviewWidget";
 import OfficerDetailsDisplayWidget from "../src/OfficerDetailsDisplayWidget";
 import WitnessDetailsDisplayWidget from "../src/WitnessDetailsDisplayWidget";
@@ -42,13 +42,13 @@ locationStories
   .add("Review", () => <LocationReviewWidget />);
 
 storiesOf("File Upload", module)
-  .add("Edit", () => <Welcome showApp={linkTo("Button")} />)
-  .add("Review", () => <Welcome showApp={linkTo("Button")} />);
+  .add("Edit", () => <FileUploadWidget />)
+  .add("Review", () => <FileUploadReviewWidget />);
 
-storiesOf("Officer Details", module).add("Review", () => (
-  <Welcome showApp={linkTo("Button")} />
+storiesOf("Officer Details", module).add("Display", () => (
+  <OfficerDetailsDisplayWidget />
 ));
 
-storiesOf("Witness Details", module).add("Review", () => (
-  <Welcome showApp={linkTo("Button")} />
+storiesOf("Witness Details", module).add("Display", () => (
+  <WitnessDetailsDisplayWidget />
 ));
