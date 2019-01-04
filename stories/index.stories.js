@@ -16,6 +16,8 @@ import FileUploadReviewWidget from "../src/FileUploadReviewWidget";
 import OfficerDetailsDisplayWidget from "../src/OfficerDetailsDisplayWidget";
 import WitnessDetailsDisplayWidget from "../src/WitnessDetailsDisplayWidget";
 
+import "../node_modules/uswds/dist/css/uswds.min.css";
+
 const dateTimeStories = storiesOf("Date Time", module);
 dateTimeStories.addDecorator(withKnobs);
 
