@@ -37,9 +37,24 @@ const locationJSON = JSON.stringify({
   position: { lat: 30.271272, lng: -97.745934 }
 });
 
+function onLocationChage(locaitonJSON) {
+  // This is where we can handle stuff with location changing
+}
+
 locationStories
-  .add("Edit", () => <LocationPickerWidget value={locationJSON} />)
-  .add("Review", () => <LocationReviewWidget />);
+  .add(
+    "Edit",
+    () => (
+      <LocationPickerWidget
+        value={text("Location", locationJSON)}
+        onChange={onLocationChage}
+      />
+    ),
+    { knobs: { escapeHTML: false } }
+  )
+  .add("Review", () => (
+    <LocationReviewWidget value={text("Location", locationJSON)} />
+  ));
 
 storiesOf("File Upload", module)
   .add("Edit", () => <FileUploadWidget />)
