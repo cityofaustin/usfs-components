@@ -256,6 +256,11 @@ export default class LocationPickerWidget extends React.Component {
     return (
       <div>
         <Autosuggest
+          ref={autosuggest => {
+            if (autosuggest !== null) {
+              this.autosuggestInput = autosuggest.input;
+            }
+          }}
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
