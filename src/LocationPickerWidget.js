@@ -103,14 +103,47 @@ export default class LocationPickerWidget extends React.Component {
   }
 
   locationUpdated({ lngLat }) {
-    const location = {
-      address: "Dropped Pin",
-      position: lngLat
-    };
+    var address = "Dropped Pin";
 
-    const valueJSON = JSON.stringify(location);
+    // Use here reverse geocoding to get a human readable address for the pin
+    fetch(`
+      https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?prox=${
+        lngLat.lat
+      }%2C${
+      lngLat.lng
+    }%2C250&mode=retrieveAddresses&maxresults=1&gen=9&app_id=${HERE_APP_ID}&app_code=${HERE_APP_CODE}`).then(
+      response => {
+        if (response.status !== 200) {
+          console.log(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
 
-    this.props.onChange(valueJSON);
+          const location = {
+            address: address,
+            position: lngLat
+          };
+
+          const valueJSON = JSON.stringify(location);
+
+          this.props.onChange(valueJSON);
+
+          return;
+        }
+
+        response.json().then(data => {
+          address = data.Response.View[0].Result[0].Location.Address.Label;
+
+          const location = {
+            address: address,
+            position: lngLat
+          };
+
+          const valueJSON = JSON.stringify(location);
+
+          this.props.onChange(valueJSON);
+        });
+      }
+    );
   }
 
   onChange(event, { newValue }) {
@@ -134,7 +167,6 @@ export default class LocationPickerWidget extends React.Component {
     event,
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) {
-    debugger;
     if (suggestion.location) {
       const address = suggestionValue;
       const lng = suggestion.location[1];
