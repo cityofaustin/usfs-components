@@ -149,6 +149,9 @@ export default class LocationPickerWidget extends React.Component {
 
       this.props.onChange(valueJSON);
     }
+
+    // Unfocus the search bar
+    this.autosuggestInput.blur();
   }
 
   // Autosuggest will call this function every time you need to update suggestions.
