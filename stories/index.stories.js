@@ -29,43 +29,35 @@ dateTimeStories
     <DateTimeReviewWidget value={text("Date/Time", "2011-11-11 11:11 PM")} />
   ));
 
-// const locationStories = storiesOf("Location", module);
-// locationStories.addDecorator(withKnobs);
-
-function onLocationChage(newLocationJSON) {
-  // This is where we can handle stuff with location changing
-  debugger;
-}
+const locationStories = storiesOf("Location", module);
+locationStories.addDecorator(withKnobs);
 
 const initialLocationJSON = JSON.stringify({
   address: "800 Guadalupe St, Austin, TX 78701",
   position: { lat: 30.271272, lng: -97.745934 }
 });
 
-storiesOf("Location", module).add(
-  "Edit",
-  withState({
-    locationJSON: initialLocationJSON
-  })(({ store }) => (
-    <LocationPickerWidget
-      value={store.state.locationJSON}
-      onChange={newLocationJSON => store.set({ locationJSON: newLocationJSON })}
-    />
-  ))
-);
-
-// locationStories
-//   .add("Edit", withState({ locationJSON: false })(({ store }) =>
-//     <LocationPickerWidget
-//       value={initialLocationJSON}
-//       onChange={onLocationChage}
-//     />
-//   )
-// .add(
-//   "Review",
-//   () => <LocationReviewWidget value={text("Location", locationJSON)} />,
-//   { knobs: { escapeHTML: false } }
-// );
+locationStories
+  .add(
+    "Edit",
+    withState({
+      locationJSON: initialLocationJSON
+    })(({ store }) => (
+      <LocationPickerWidget
+        value={store.state.locationJSON}
+        onChange={newLocationJSON =>
+          store.set({ locationJSON: newLocationJSON })
+        }
+      />
+    ))
+  )
+  .add(
+    "Review",
+    () => (
+      <LocationReviewWidget value={text("Location", initialLocationJSON)} />
+    ),
+    { knobs: { escapeHTML: false } }
+  );
 
 storiesOf("File Upload", module)
   .add("Edit", () => <FileUploadWidget />)
