@@ -5,7 +5,7 @@ import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
 
-import { StateDecorator, Store } from "@sambego/storybook-state";
+import { withState } from "@dump247/storybook-state";
 
 import DateTimeWidget from "../src/DateTimeWidget";
 import DateTimeReviewWidget from "../src/DateTimeReviewWidget";
@@ -29,37 +29,43 @@ dateTimeStories
     <DateTimeReviewWidget value={text("Date/Time", "2011-11-11 11:11 PM")} />
   ));
 
-const locationStories = storiesOf("Location", module);
-locationStories.addDecorator(withKnobs);
-
-const locationStore = new Store({
-  locationJSON: JSON.stringify({
-    address: "800 Guadalupe St, Austin, TX 78701",
-    position: { lat: 30.271272, lng: -97.745934 }
-  })
-});
+// const locationStories = storiesOf("Location", module);
+// locationStories.addDecorator(withKnobs);
 
 function onLocationChage(newLocationJSON) {
   // This is where we can handle stuff with location changing
   debugger;
 }
 
-locationStories
-  .addDecorator(StateDecorator(locationStore))
-  .add("Edit", () => (
+const initialLocationJSON = JSON.stringify({
+  address: "800 Guadalupe St, Austin, TX 78701",
+  position: { lat: 30.271272, lng: -97.745934 }
+});
+
+storiesOf("Location", module).add(
+  "Edit",
+  withState({
+    locationJSON: initialLocationJSON
+  })(({ store }) => (
     <LocationPickerWidget
-      value={locationStore.get("locationJSON")}
-      onChange={newLocationJSON => {
-        locationStore.set({ locationJSON: newLocationJSON });
-        debugger;
-      }}
+      value={store.state.locationJSON}
+      onChange={newLocationJSON => store.set({ locationJSON: newLocationJSON })}
     />
   ))
-  .add(
-    "Review",
-    () => <LocationReviewWidget value={text("Location", locationJSON)} />,
-    { knobs: { escapeHTML: false } }
-  );
+);
+
+// locationStories
+//   .add("Edit", withState({ locationJSON: false })(({ store }) =>
+//     <LocationPickerWidget
+//       value={initialLocationJSON}
+//       onChange={onLocationChage}
+//     />
+//   )
+// .add(
+//   "Review",
+//   () => <LocationReviewWidget value={text("Location", locationJSON)} />,
+//   { knobs: { escapeHTML: false } }
+// );
 
 storiesOf("File Upload", module)
   .add("Edit", () => <FileUploadWidget />)
