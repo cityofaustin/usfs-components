@@ -76,7 +76,9 @@ const getSuggestions = value => {
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.name;
+const getSuggestionValue = suggestion => {
+  return suggestion.name;
+};
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
@@ -97,6 +99,7 @@ export default class LocationPickerWidget extends React.Component {
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
       this
     );
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
   locationUpdated({ lngLat }) {
@@ -111,23 +114,88 @@ export default class LocationPickerWidget extends React.Component {
   }
 
   onChange(event, { newValue }) {
-    debugger;
-    const location = {
+    // Keep our current location until we pick a suggestion
+    const valueJSON = this.props.value
+      ? this.props.value
+      : this.props.schema.formData;
+    const location = JSON.parse(valueJSON);
+
+    const newLocation = {
       address: newValue,
-      position: { lng: 3, lat: 3 }
+      position: location.position
     };
 
-    const valueJSON = JSON.stringify(location);
+    const newValueJSON = JSON.stringify(newLocation);
 
-    this.props.onChange(valueJSON);
+    this.props.onChange(newValueJSON);
+  }
+
+  onSuggestionSelected(
+    event,
+    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
+  ) {
+    debugger;
+    if (suggestion.location) {
+      const address = suggestionValue;
+      const lng = suggestion.location[1];
+      const lat = suggestion.location[0];
+
+      const location = {
+        address: address,
+        position: { lng: lng, lat: lat }
+      };
+
+      const valueJSON = JSON.stringify(location);
+
+      this.props.onChange(valueJSON);
+    }
   }
 
   // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested({ value }) {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
+    const inputLength = value.length;
+
+    if (inputLength > 2) {
+      const valueJSON = this.props.value
+        ? this.props.value
+        : this.props.schema.formData;
+      const location = JSON.parse(valueJSON);
+
+      fetch(
+        `https://places.api.here.com/places/v1/autosuggest?at=${
+          location.position.lat
+        },${
+          location.position.lng
+        }&q=${value}&app_id=${HERE_APP_ID}&app_code=${HERE_APP_CODE}`
+      )
+        .then(response => {
+          if (response.status !== 200) {
+            console.log(
+              "Looks like there was a problem. Status Code: " + response.status
+            );
+            this.setState({ suggestions: [] });
+            return;
+          }
+
+          response.json().then(data => {
+            const filteredResults = data.results.filter(
+              result => result.position && result.vicinity
+            );
+            const suggestions = filteredResults.map(result => ({
+              name: result.title,
+              location: result.position,
+              humanAddress: result.vicinity.replace(/<br\/>/g, ", ")
+            }));
+            this.setState({ suggestions: suggestions });
+          });
+        })
+        .catch(err => {
+          console.log("Fetch Error :-S", err);
+          this.setState({ suggestions: [] });
+        });
+    } else {
+      this.setState({ suggestions: [] });
+    }
   }
 
   // Autosuggest will call this function every time you need to clear suggestions.
@@ -156,6 +224,7 @@ export default class LocationPickerWidget extends React.Component {
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
