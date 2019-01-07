@@ -5,7 +5,7 @@ import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
 
-import { Button, Welcome } from "@storybook/react/demo";
+import { StateDecorator, Store } from "@sambego/storybook-state";
 
 import DateTimeWidget from "../src/DateTimeWidget";
 import DateTimeReviewWidget from "../src/DateTimeReviewWidget";
@@ -32,26 +32,29 @@ dateTimeStories
 const locationStories = storiesOf("Location", module);
 locationStories.addDecorator(withKnobs);
 
-const locationJSON = JSON.stringify({
-  address: "800 Guadalupe St, Austin, TX 78701",
-  position: { lat: 30.271272, lng: -97.745934 }
+const locationStore = new Store({
+  locationJSON: JSON.stringify({
+    address: "800 Guadalupe St, Austin, TX 78701",
+    position: { lat: 30.271272, lng: -97.745934 }
+  })
 });
 
-function onLocationChage(locaitonJSON) {
+function onLocationChage(newLocationJSON) {
   // This is where we can handle stuff with location changing
+  debugger;
 }
 
 locationStories
-  .add(
-    "Edit",
-    () => (
-      <LocationPickerWidget
-        value={text("Location", locationJSON)}
-        onChange={onLocationChage}
-      />
-    ),
-    { knobs: { escapeHTML: false } }
-  )
+  .addDecorator(StateDecorator(locationStore))
+  .add("Edit", () => (
+    <LocationPickerWidget
+      value={locationStore.get("locationJSON")}
+      onChange={newLocationJSON => {
+        locationStore.set({ locationJSON: newLocationJSON });
+        debugger;
+      }}
+    />
+  ))
   .add(
     "Review",
     () => <LocationReviewWidget value={text("Location", locationJSON)} />,

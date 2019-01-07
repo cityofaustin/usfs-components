@@ -86,7 +86,6 @@ export default class LocationPickerWidget extends React.Component {
     super(props);
 
     this.state = {
-      value: "",
       suggestions: []
     };
 
@@ -113,9 +112,14 @@ export default class LocationPickerWidget extends React.Component {
 
   onChange(event, { newValue }) {
     debugger;
-    this.setState({
-      value: newValue
-    });
+    const location = {
+      address: newValue,
+      position: { lng: 3, lat: 3 }
+    };
+
+    const valueJSON = JSON.stringify(location);
+
+    this.props.onChange(valueJSON);
   }
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -142,7 +146,7 @@ export default class LocationPickerWidget extends React.Component {
 
     const inputProps = {
       placeholder: "Type a programming language",
-      value: this.state.value,
+      value: location.address,
       onChange: this.onChange
     };
 
