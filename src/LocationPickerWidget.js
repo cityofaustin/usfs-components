@@ -49,18 +49,6 @@ class SelectLocationMap extends Component {
   }
 }
 
-// Imagine you have a list of languages that you'd like to autosuggest.
-const languages = [
-  {
-    name: "C",
-    year: 1972
-  },
-  {
-    name: "Elm",
-    year: 2012
-  }
-];
-
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
@@ -100,6 +88,7 @@ export default class LocationPickerWidget extends React.Component {
       this
     );
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.getCurrentPosition = this.getCurrentPosition.bind(this);
   }
 
   locationUpdated({ lngLat }) {
@@ -241,6 +230,23 @@ export default class LocationPickerWidget extends React.Component {
     });
   }
 
+  getCurrentPosition() {
+    window.navigator.geolocation.getCurrentPosition(
+      position => {
+        const lngLat = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        this.locationUpdated({ lngLat });
+      },
+      error => {
+        debugger;
+      },
+      { enableHighAccuracy: true }
+    );
+  }
+
   render() {
     const valueJSON = this.props.value
       ? this.props.value
@@ -248,34 +254,34 @@ export default class LocationPickerWidget extends React.Component {
     const location = JSON.parse(valueJSON);
 
     const inputProps = {
-      placeholder: "Type a programming language",
       value: location.address,
       onChange: this.onChange
     };
 
     return (
       <div>
-        <Autosuggest
-          ref={autosuggest => {
-            if (autosuggest !== null) {
-              this.autosuggestInput = autosuggest.input;
-            }
-          }}
-          suggestions={this.state.suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={this.onSuggestionSelected}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-        />
         <div>
-          <SelectLocationMap
-            lat={location.position.lat}
-            lng={location.position.lng}
-            locationUpdated={this.locationUpdated}
+          <Autosuggest
+            ref={autosuggest => {
+              if (autosuggest !== null) {
+                this.autosuggestInput = autosuggest.input;
+              }
+            }}
+            suggestions={this.state.suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            onSuggestionSelected={this.onSuggestionSelected}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={inputProps}
           />
+          <div onClick={this.getCurrentPosition}>GET LOCATION</div>
         </div>
+        <SelectLocationMap
+          lat={location.position.lat}
+          lng={location.position.lng}
+          locationUpdated={this.locationUpdated}
+        />
       </div>
     );
   }
