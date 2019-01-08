@@ -15,12 +15,12 @@ module.exports = {
       // add your custom rules.
       {
         test: /\.css$/,
-        loaders: ["style-loader", "css-loader"]
+        loaders: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(eot|woff|woff2|svg|ttf|png)([\?]?.*)$/,
-        loader: "file-loader"
-      }
-    ]
-  }
+        loader: 'file-loader',
+      },
+    ],
+  },
 };

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
-import Autosuggest from "react-autosuggest";
-import "./LocationPickerWidget.css";
+import React, { Component } from 'react';
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import Autosuggest from 'react-autosuggest';
+import './LocationPickerWidget.css';
 
 const Map = ReactMapboxGl({
   accessToken:
-    "pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw"
+    'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
@@ -26,7 +26,7 @@ class SelectLocationMap extends Component {
     const { lat, lng } = this.props;
     return (
       <Map
-        style={"mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r"}
+        style={'mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r'}
         center={[lng, lat]}
         onStyleLoad={this.onStyleLoad}
       >
@@ -34,8 +34,8 @@ class SelectLocationMap extends Component {
           type="symbol"
           id="selectedLocation"
           layout={{
-            "icon-image": "marker-open-small",
-            "icon-allow-overlap": true
+            'icon-image': 'marker-open-small',
+            'icon-allow-overlap': true,
           }}
         >
           <Feature
@@ -52,13 +52,13 @@ class SelectLocationMap extends Component {
 // Imagine you have a list of languages that you'd like to autosuggest.
 const languages = [
   {
-    name: "C",
-    year: 1972
+    name: 'C',
+    year: 1972,
   },
   {
-    name: "Elm",
-    year: 2012
-  }
+    name: 'Elm',
+    year: 2012,
+  },
 ];
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
@@ -69,7 +69,7 @@ const getSuggestions = value => {
   return inputLength === 0
     ? []
     : languages.filter(
-        lang => lang.name.toLowerCase().slice(0, inputLength) === inputValue
+        lang => lang.name.toLowerCase().slice(0, inputLength) === inputValue,
       );
 };
 
@@ -86,24 +86,24 @@ export default class LocationPickerWidget extends React.Component {
     super(props);
 
     this.state = {
-      value: "",
-      suggestions: []
+      value: '',
+      suggestions: [],
     };
 
     this.locationUpdated = this.locationUpdated.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
-      this
+      this,
     );
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
-      this
+      this,
     );
   }
 
   locationUpdated({ lngLat }) {
     const location = {
-      address: "Dropped Pin",
-      position: lngLat
+      address: 'Dropped Pin',
+      position: lngLat,
     };
 
     const valueJSON = JSON.stringify(location);
@@ -114,7 +114,7 @@ export default class LocationPickerWidget extends React.Component {
   onChange(event, { newValue }) {
     debugger;
     this.setState({
-      value: newValue
+      value: newValue,
     });
   }
 
@@ -122,7 +122,7 @@ export default class LocationPickerWidget extends React.Component {
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested({ value }) {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: getSuggestions(value),
     });
   }
 
@@ -130,7 +130,7 @@ export default class LocationPickerWidget extends React.Component {
   onSuggestionsClearRequested() {
     this.setState({
       suggestions: [],
-      value: ""
+      value: '',
     });
   }
 
@@ -141,9 +141,9 @@ export default class LocationPickerWidget extends React.Component {
     const location = JSON.parse(valueJSON);
 
     const inputProps = {
-      placeholder: "Type a programming language",
+      placeholder: 'Type a programming language',
       value: this.state.value,
-      onChange: this.onChange
+      onChange: this.onChange,
     };
 
     return (

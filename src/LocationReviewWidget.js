@@ -1,5 +1,5 @@
-import React from "react";
-import classnames from "classnames";
+import React from 'react';
+import classnames from 'classnames';
 
 export default function LocationReviewWidget(props) {
   const valueJSON = props.value ? props.value : props.schema.formData;
