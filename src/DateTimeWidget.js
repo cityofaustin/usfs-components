@@ -1,7 +1,7 @@
-import "flatpickr/dist/themes/material_green.css";
+import 'flatpickr/dist/themes/material_green.css';
 
-import React from "react";
-import Flatpickr from "react-flatpickr";
+import React from 'react';
+import Flatpickr from 'react-flatpickr';
 
 export default class DateTimeWidget extends React.Component {
   constructor(props) {

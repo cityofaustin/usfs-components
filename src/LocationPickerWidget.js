@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
-import Autosuggest from "react-autosuggest";
-import "./LocationPickerWidget.css";
+import React, { Component } from 'react';
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import Autosuggest from 'react-autosuggest';
+import './LocationPickerWidget.css';
 
 const Map = ReactMapboxGl({
   accessToken:
-    "pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw"
+    'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
@@ -26,7 +26,7 @@ class SelectLocationMap extends Component {
     const { lat, lng } = this.props;
     return (
       <Map
-        style={"mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r"}
+        style={'mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r'}
         center={[lng, lat]}
         onStyleLoad={this.onStyleLoad}
       >
@@ -34,8 +34,8 @@ class SelectLocationMap extends Component {
           type="symbol"
           id="selectedLocation"
           layout={{
-            "icon-image": "marker-open-small",
-            "icon-allow-overlap": true
+            'icon-image': 'marker-open-small',
+            'icon-allow-overlap': true,
           }}
         >
           <Feature
@@ -57,7 +57,7 @@ const getSuggestions = value => {
   return inputLength === 0
     ? []
     : languages.filter(
-        lang => lang.name.toLowerCase().slice(0, inputLength) === inputValue
+        lang => lang.name.toLowerCase().slice(0, inputLength) === inputValue,
       );
 };
 
@@ -76,23 +76,23 @@ export default class LocationPickerWidget extends React.Component {
     super(props);
 
     this.state = {
-      suggestions: []
+      suggestions: [],
     };
 
     this.locationUpdated = this.locationUpdated.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
-      this
+      this,
     );
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
-      this
+      this,
     );
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.getCurrentPosition = this.getCurrentPosition.bind(this);
   }
 
   locationUpdated({ lngLat }) {
-    var address = "Dropped Pin";
+    var address = 'Dropped Pin';
 
     // Use here reverse geocoding to get a human readable address for the pin
     fetch(`
@@ -104,12 +104,12 @@ export default class LocationPickerWidget extends React.Component {
       response => {
         if (response.status !== 200) {
           console.log(
-            "Looks like there was a problem. Status Code: " + response.status
+            'Looks like there was a problem. Status Code: ' + response.status,
           );
 
           const location = {
             address: address,
-            position: lngLat
+            position: lngLat,
           };
 
           const valueJSON = JSON.stringify(location);
@@ -124,14 +124,14 @@ export default class LocationPickerWidget extends React.Component {
 
           const location = {
             address: address,
-            position: lngLat
+            position: lngLat,
           };
 
           const valueJSON = JSON.stringify(location);
 
           this.props.onChange(valueJSON);
         });
-      }
+      },
     );
   }
 
@@ -144,7 +144,7 @@ export default class LocationPickerWidget extends React.Component {
 
     const newLocation = {
       address: newValue,
-      position: location.position
+      position: location.position,
     };
 
     const newValueJSON = JSON.stringify(newLocation);
@@ -154,7 +154,7 @@ export default class LocationPickerWidget extends React.Component {
 
   onSuggestionSelected(
     event,
-    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
+    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method },
   ) {
     if (suggestion.location) {
       const address = suggestionValue;
@@ -163,7 +163,7 @@ export default class LocationPickerWidget extends React.Component {
 
       const location = {
         address: address,
-        position: { lng: lng, lat: lat }
+        position: { lng: lng, lat: lat },
       };
 
       const valueJSON = JSON.stringify(location);
@@ -190,12 +190,12 @@ export default class LocationPickerWidget extends React.Component {
           location.position.lat
         },${
           location.position.lng
-        }&q=${value}&app_id=${HERE_APP_ID}&app_code=${HERE_APP_CODE}`
+        }&q=${value}&app_id=${HERE_APP_ID}&app_code=${HERE_APP_CODE}`,
       )
         .then(response => {
           if (response.status !== 200) {
             console.log(
-              "Looks like there was a problem. Status Code: " + response.status
+              'Looks like there was a problem. Status Code: ' + response.status,
             );
             this.setState({ suggestions: [] });
             return;
@@ -203,18 +203,18 @@ export default class LocationPickerWidget extends React.Component {
 
           response.json().then(data => {
             const filteredResults = data.results.filter(
-              result => result.position && result.vicinity
+              result => result.position && result.vicinity,
             );
             const suggestions = filteredResults.map(result => ({
               name: result.title,
               location: result.position,
-              humanAddress: result.vicinity.replace(/<br\/>/g, ", ")
+              humanAddress: result.vicinity.replace(/<br\/>/g, ', '),
             }));
             this.setState({ suggestions: suggestions });
           });
         })
         .catch(err => {
-          console.log("Fetch Error :-S", err);
+          console.log('Fetch Error :-S', err);
           this.setState({ suggestions: [] });
         });
     } else {
@@ -226,7 +226,7 @@ export default class LocationPickerWidget extends React.Component {
   onSuggestionsClearRequested() {
     this.setState({
       suggestions: [],
-      value: ""
+      value: '',
     });
   }
 
@@ -235,7 +235,7 @@ export default class LocationPickerWidget extends React.Component {
       position => {
         const lngLat = {
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         };
 
         this.locationUpdated({ lngLat });
@@ -243,7 +243,7 @@ export default class LocationPickerWidget extends React.Component {
       error => {
         debugger;
       },
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true },
     );
   }
 
@@ -255,7 +255,7 @@ export default class LocationPickerWidget extends React.Component {
 
     const inputProps = {
       value: location.address,
-      onChange: this.onChange
+      onChange: this.onChange,
     };
 
     return (
