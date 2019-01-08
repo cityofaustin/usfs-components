@@ -4,7 +4,7 @@
   "description": "Custom components for USFS forms",
   "main": "build/index.js",
   "repository": "https://github.com/cityofaustin/usfs-components",
-  "author": "Brian Smith <briaguya@gmail.com>",
+  "author": "City of Austin",
   "license": "MIT",
   "peerDependencies": {},
   "scripts": {
