@@ -23,6 +23,7 @@
     "react-filepond": "^5.0.0",
     "react-flatpickr": "^3.6.4",
     "react-mapbox-gl": "3.9.2",
+    "react-query-params": "^1.0.9",
     "uswds": "^1.6.9",
     "webpack": "^4.27.1"
   },
