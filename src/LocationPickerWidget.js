@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import * as MapboxGl from 'mapbox-gl';
+
 import Autosuggest from 'react-autosuggest';
 import './LocationPickerWidget.css';
+//importing the geocoder didnt seem to work at first
+const MapboxGeocoder = require('mapbox-gl-geocoder');
 
 const Map = ReactMapboxGl({
   accessToken:
     'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
+});
+
+const geocoderControl = new MapboxGeocoder({
+  accessToken:
+    'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
+  placeholder: 'Enter a location here',
+  // bounding box restricts results to Travis County
+  bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
@@ -14,11 +26,48 @@ const HERE_APP_CODE = `VHZxGy1nmghs2BCbo0cVCQ`;
 class SelectLocationMap extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      center: [-97.7460479736328, 30.266184073558826],
+    };
     this.onStyleLoad = this.onStyleLoad.bind(this);
   }
 
   onStyleLoad(map) {
+    const geolocateControl = new MapboxGl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      showUserLocation: true,
+    });
+
+    map.addControl(geolocateControl, 'top-right');
+
+    map.addSource('geojson-point', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [],
+      },
+    });
+
+    map.addLayer({
+      id: 'geocoded-point',
+      source: 'geojson-point',
+      type: 'circle',
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#007cbf',
+      },
+    });
+
+    map.addControl(geocoderControl, 'top-left');
+
+    // using mapbox geocoder's event listener to show result
+    // this ought to be linked up with or replace previous code
+    geocoderControl.on('result', function(event) {
+      map.getSource('geojson-point').setData(event.result.geometry);
+    });
+
     map.resize();
   }
 
@@ -28,6 +77,7 @@ class SelectLocationMap extends Component {
       <Map
         style={'mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r'}
         center={[lng, lat]}
+        center={this.state.center}
         onStyleLoad={this.onStyleLoad}
       >
         <Layer
