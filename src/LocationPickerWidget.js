@@ -40,7 +40,7 @@ class SelectLocationMap extends Component {
       showUserLocation: true,
     });
 
-    map.addControl(geolocateControl, 'top-right');
+    map.addControl(geolocateControl, 'top-left');
 
     map.addSource('geojson-point', {
       type: 'geojson',
@@ -325,7 +325,6 @@ export default class LocationPickerWidget extends React.Component {
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
           />
-          <div onClick={this.getCurrentPosition}>GET LOCATION</div>
         </div>
         <SelectLocationMap
           lat={location.position.lat}

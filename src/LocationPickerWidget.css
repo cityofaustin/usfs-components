@@ -119,6 +119,16 @@
     @-ms-keyframes rotate { from { -ms-transform: rotate(0deg); } to { -ms-transform: rotate(360deg); } }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+
+
+html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-container div.mapboxgl-ctrl-top-left div.mapboxgl-ctrl.mapboxgl-ctrl-group button.mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate {
+  position: absolute;
+  left: 85%;
+  top: 28%;
+  z-index: 20;
+  color: blue;
+}
+
 /* icons */
 .geocoder-icon {
   display:inline-block;
