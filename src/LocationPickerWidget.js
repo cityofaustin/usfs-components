@@ -42,6 +42,7 @@ class SelectLocationMap extends Component {
 
     map.addControl(geolocateControl, 'top-left');
 
+
     map.addSource('geojson-point', {
       type: 'geojson',
       data: {
@@ -88,11 +89,14 @@ class SelectLocationMap extends Component {
             'icon-allow-overlap': true,
           }}
         >
-          <Feature
+          {/*
+
+          }<Feature
             coordinates={[lng, lat]}
             draggable={true}
             onDragEnd={this.props.locationUpdated}
           />
+          */}
         </Layer>
       </Map>
     );
@@ -310,8 +314,9 @@ export default class LocationPickerWidget extends React.Component {
 
     return (
       <div>
-        <div>
-          <Autosuggest
+        {/* <div>
+
+           hiding til it's better integrated <Autosuggest
             ref={autosuggest => {
               if (autosuggest !== null) {
                 this.autosuggestInput = autosuggest.input;
@@ -325,7 +330,7 @@ export default class LocationPickerWidget extends React.Component {
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
           />
-        </div>
+      </div> */}
         <SelectLocationMap
           lat={location.position.lat}
           lng={location.position.lng}

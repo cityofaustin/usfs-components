@@ -15,9 +15,9 @@
   font:15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   position:relative;
   background-color:white;
-  width:33.3333%;
+  width:100%;
   min-width:240px;
-  max-width:360px;
+  /* max-width:600px; */
   z-index:1;
   border-radius:3px;
   }
@@ -66,6 +66,8 @@
 .mapboxgl-ctrl-geocoder,
 .mapboxgl-ctrl-geocoder ul {
   box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+  width: 100%;
+
   }
 
 /* Suggestions */
@@ -123,10 +125,11 @@
 
 html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-container div.mapboxgl-ctrl-top-left div.mapboxgl-ctrl.mapboxgl-ctrl-group button.mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate {
   position: absolute;
-  left: 85%;
+  left: 105%;
   top: 28%;
   z-index: 20;
-  color: blue;
+  background-color: white;
+
 }
 
 /* icons */
