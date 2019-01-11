@@ -30,9 +30,16 @@ class SelectLocationMap extends Component {
       center: [-97.7460479736328, 30.266184073558826],
     };
     this.onStyleLoad = this.onStyleLoad.bind(this);
+    this.onMoveEnd = this.onMoveEnd.bind(this);
+  }
+
+  onMoveEnd(map) {
+    const center = map.getCenter();
+    this.props.locationUpdated({ lngLat: center });
   }
 
   onStyleLoad(map) {
+    // debugger;
     const geolocateControl = new MapboxGl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
@@ -41,7 +48,6 @@ class SelectLocationMap extends Component {
     });
 
     map.addControl(geolocateControl, 'top-left');
-
 
     map.addSource('geojson-point', {
       type: 'geojson',
@@ -80,6 +86,7 @@ class SelectLocationMap extends Component {
         center={[lng, lat]}
         center={this.state.center}
         onStyleLoad={this.onStyleLoad}
+        onMoveEnd={this.onMoveEnd}
       >
         <Layer
           type="symbol"
@@ -89,14 +96,12 @@ class SelectLocationMap extends Component {
             'icon-allow-overlap': true,
           }}
         >
-          {/*
-
-          }<Feature
+        {/*
+          <Feature
             coordinates={[lng, lat]}
             draggable={true}
-            onDragEnd={this.props.locationUpdated}
-          />
-          */}
+            onMoveEnd={this.props.locationUpdated}
+          /> */}
         </Layer>
       </Map>
     );
@@ -314,9 +319,8 @@ export default class LocationPickerWidget extends React.Component {
 
     return (
       <div>
-        {/* <div>
-
-           hiding til it's better integrated <Autosuggest
+        <div>
+          <Autosuggest
             ref={autosuggest => {
               if (autosuggest !== null) {
                 this.autosuggestInput = autosuggest.input;
@@ -330,12 +334,17 @@ export default class LocationPickerWidget extends React.Component {
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
           />
-      </div> */}
-        <SelectLocationMap
-          lat={location.position.lat}
-          lng={location.position.lng}
-          locationUpdated={this.locationUpdated}
-        />
+        </div>
+        <div className="map-container">
+          <SelectLocationMap
+            lat={location.position.lat}
+            lng={location.position.lng}
+            locationUpdated={this.locationUpdated}
+          />
+
+          <div className="pin" />
+          <div className="pulse" />
+        </div>
       </div>
     );
   }
