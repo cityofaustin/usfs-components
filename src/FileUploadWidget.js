@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactQueryParams from 'react-query-params';
 
 import { FilePond, File, registerPlugin } from 'react-filepond';
 
@@ -11,26 +10,28 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
 
-// const endpoint = 'https://6jm8rnjkxf.execute-api.us-east-1.amazonaws.com/staging';
-const endpoint = 'http://127.0.0.1:5000';
+import crypto from 'crypto';
+import uuid from 'uuid';
 
-// class OfficerListWidget extends Component
-class FileUpload extends ReactQueryParams {
+const endpoint = process.env.API_URL;
+
+class FileUpload extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      caseNumber: localStorage.getItem('caseNumber') || '',
-      files: [],
-      fileList: [],
-    };
+      const uniqueid = crypto.createHmac('sha256', uuid.v4()).digest('hex');
+      console.log("Unique Identifier: " + uniqueid);
 
-    this.fileList = [];
+      console.log("End-point (API_URL): " + endpoint);
 
-    this.defaultQueryParams = {
-      case: 'n/a',
-    };
+      this.state = {
+        uniqueIdentifier: uniqueid,
+        files: [],
+        fileList: [],
+      };
 
-    this.filesUpdated = this.filesUpdated.bind(this);
+      this.fileList = [];
+
+      this.filesUpdated = this.filesUpdated.bind(this);
   }
 
   handleInit() {
@@ -60,7 +61,8 @@ class FileUpload extends ReactQueryParams {
       console.log('handleUpload() Object keys loaded');
     } catch (error) {
       fields = [];
-      console.log('Yikes, no good');
+      console.log("Yikes, no good: ");
+      console.log(error);
     }
 
     for (const key of fields) {
@@ -68,7 +70,7 @@ class FileUpload extends ReactQueryParams {
       formData.append(key, fileSignature['fields'][key]);
     }
     console.log('fieldName:' + fieldName);
-    console.log('file:' + file);
+
     console.log('key:' + fileSignature['fields']['key']);
     formData.append('file', file, fileSignature['fields']['key']);
 
@@ -105,7 +107,7 @@ class FileUpload extends ReactQueryParams {
 
         // Let FilePond know the request has been cancelled
         abort();
-      },
+      }
     };
   }
 
@@ -142,25 +144,23 @@ class FileUpload extends ReactQueryParams {
     });
   }
 
-  retrieveFileSignature(key, caseNum) {
-    console.log('retrieveFileSignature: ' + key + ', ' + caseNum);
+  retrieveFileSignature (key, uniqueIdentifier) {
+    console.log("retrieveFileSignature: " + key + ", " + uniqueIdentifier);
 
     var formData = new FormData();
 
     formData.append('key', key);
-    formData.append('case', caseNum);
+    formData.append('uniqueid', uniqueIdentifier);
 
-    fetch(
-      this.withQuery(endpoint + '/uploads/request-signature', {
-        file: key,
-        case: caseNum.toLowerCase(),
-      }),
-    )
-      .then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(res => {
-        this.parseSignatureResponse(res);
-      });
+    fetch(this.withQuery(endpoint + "/uploads/request-signature", {
+      file: key,
+      uniqueid: uniqueIdentifier.toLowerCase()
+    }))
+    .then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(res => {
+      this.parseSignatureResponse(res);
+    })
   }
 
   handleFileAdded(error, file) {
@@ -170,7 +170,7 @@ class FileUpload extends ReactQueryParams {
     console.log('handleFileAdded() File Object: ');
     console.log(file);
 
-    this.retrieveFileSignature(file.filename, this.state.caseNumber);
+    this.retrieveFileSignature(file.filename, this.state.uniqueIdentifier);
   }
 
   handleRemoveFile(file) {
@@ -190,9 +190,8 @@ class FileUpload extends ReactQueryParams {
 
   getFileSignatureFromList(file) {
     let uploadedFileName = file.name || '';
-    console.log(
-      'getFileSignatureFromList() We are looking for: ' + uploadedFileName,
-    );
+    console.log('getFileSignatureFromList() We are looking for: ' + uploadedFileName);
+
     for (let i in this.fileList) {
       let currentFile = this.fileList[i];
       if (currentFile['filename'] === uploadedFileName) {
@@ -216,14 +215,11 @@ class FileUpload extends ReactQueryParams {
     return (
       <div>
         <header>
-          {/* First we need to get the case number into the page */}
-          <div>Case Number:</div>
-          <div>{this.state.caseNumber}</div>
           {/* // Then we need to pass FilePond properties as attributes */}
           <FilePond
             ref={ref => (this.pond = ref)}
             allowMultiple={true}
-            maxFiles={3}
+            maxFiles={10}
             /* FilePond allows a custom process to handle uploads */
             server={{
               process: this.handleProcessing.bind(this),
