@@ -28,9 +28,26 @@ class SelectLocationMap extends Component {
     super(props);
     this.state = {
       center: [-97.7460479736328, 30.266184073558826],
+      showPin: true
     };
     this.onStyleLoad = this.onStyleLoad.bind(this);
     this.onMoveEnd = this.onMoveEnd.bind(this);
+    this.onDragStart = this.onDragStart.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  toggleMenu() {
+  this.setState({
+    showPin: !this.state.showPin
+  })
+}
+
+  onDragStart(map) {
+    this.toggleMenu();
+  }
+
+  onDragEnd(map) {
+    this.toggleMenu();
   }
 
   onMoveEnd(map) {
@@ -80,13 +97,17 @@ class SelectLocationMap extends Component {
 
   render() {
     const { lat, lng } = this.props;
+    const pinDrop = this.state.showPin ? 'show' : 'hide';
+
     return (
       <Map
         style={'mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r'}
         center={[lng, lat]}
-        center={this.state.center}
         onStyleLoad={this.onStyleLoad}
+        onMoveStart={this.onMoveStart}
         onMoveEnd={this.onMoveEnd}
+        onDragStart={this.onDragStart}
+        onDragEnd={this.onDragEnd}
       >
         <Layer
           type="symbol"
@@ -96,13 +117,16 @@ class SelectLocationMap extends Component {
             'icon-allow-overlap': true,
           }}
         >
-        {/*
+          {/*
           <Feature
             coordinates={[lng, lat]}
             draggable={true}
             onMoveEnd={this.props.locationUpdated}
           /> */}
         </Layer>
+
+                <div className={`pin ${pinDrop}`} />
+                  <div className="pulse" />
       </Map>
     );
   }
@@ -317,6 +341,8 @@ export default class LocationPickerWidget extends React.Component {
       onChange: this.onChange,
     };
 
+
+
     return (
       <div>
         <div>
@@ -342,8 +368,6 @@ export default class LocationPickerWidget extends React.Component {
             locationUpdated={this.locationUpdated}
           />
 
-          <div className="pin" />
-          <div className="pulse" />
         </div>
       </div>
     );

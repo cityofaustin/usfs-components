@@ -193,6 +193,9 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
       animation-duration: 1s;
 
     }
+    .pin.hide {
+      display: none;
+    }
     .pin:after {
       content: '';
       width: 14px;
