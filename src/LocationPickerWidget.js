@@ -56,7 +56,7 @@ class SelectLocationMap extends Component {
   }
 
   onStyleLoad(map) {
-    // debugger;
+
     const geolocateControl = new MapboxGl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
@@ -211,7 +211,7 @@ export default class LocationPickerWidget extends React.Component {
           };
 
           const valueJSON = JSON.stringify(location);
-
+          geocoderControl.setInput(location.address);
           this.props.onChange(valueJSON);
         });
       },
@@ -224,6 +224,8 @@ export default class LocationPickerWidget extends React.Component {
       ? this.props.value
       : this.props.schema.formData;
     const location = JSON.parse(valueJSON);
+
+
 
     const newLocation = {
       address: newValue,
@@ -346,7 +348,7 @@ export default class LocationPickerWidget extends React.Component {
     return (
       <div>
         <div>
-          <Autosuggest
+          {/*<Autosuggest
             ref={autosuggest => {
               if (autosuggest !== null) {
                 this.autosuggestInput = autosuggest.input;
@@ -360,6 +362,7 @@ export default class LocationPickerWidget extends React.Component {
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
           />
+          */}
         </div>
         <div className="map-container">
           <SelectLocationMap

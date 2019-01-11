@@ -34,7 +34,7 @@
   background-color:transparent;
   height:40px;
   margin:0;
-  color:rgba(0,0,0,.5);
+  /* color:rgba(0,0,0,.5); */
   padding:10px 10px 10px 40px;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -71,7 +71,7 @@
 .mapboxgl-ctrl-geocoder,
 .mapboxgl-ctrl-geocoder ul {
   box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-  width: 100%;
+  width: 120%;
 
   }
 
@@ -191,6 +191,7 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
       -o-animation-duration: 1s;
       -ms-animation-duration: 1s;
       animation-duration: 1s;
+      display: initial;
 
     }
     .pin.hide {
