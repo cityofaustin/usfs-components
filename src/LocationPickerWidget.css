@@ -71,7 +71,7 @@
 .mapboxgl-ctrl-geocoder,
 .mapboxgl-ctrl-geocoder ul {
   box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-  width: 120%;
+  width: 100%;
 
   }
 
@@ -163,19 +163,17 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
     .pin {
       width: 30px;
       height: 30px;
+      position: absolute;
+      left: 48.8%;
+      top: 44%;
+      transform: rotate(-45deg);
       border-radius: 50% 50% 50% 0;
       background: #89849b;
-      position: absolute;
-      -webkit-transform: rotate(-45deg);
-      -moz-transform: rotate(-45deg);
-      -o-transform: rotate(-45deg);
-      -ms-transform: rotate(-45deg);
-      transform: rotate(-45deg);
-      left: 50%;
+      /* left: 50%;
       top: 50%;
       bottom: 50%;
-      right: 50%;
-      margin: -2.3% 0 0 -1.5%;
+      right: 50%; */
+      /* margin: -5% 0 0 -2%; */
       -webkit-animation-name: bounce;
       -moz-animation-name: bounce;
       -o-animation-name: bounce;
@@ -186,10 +184,6 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
       -o-animation-fill-mode: both;
       -ms-animation-fill-mode: both;
       animation-fill-mode: both;
-      -webkit-animation-duration: 1s;
-      -moz-animation-duration: 1s;
-      -o-animation-duration: 1s;
-      -ms-animation-duration: 1s;
       animation-duration: 1s;
       display: initial;
 
@@ -214,6 +208,7 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
       position: absolute;
       left: 50%;
       top: 50%;
+      transform: translate3d(-50%,-50%,0);
       margin: 1% 0px 0px -0.7%;
       -webkit-transform: rotateX(55deg);
       -moz-transform: rotateX(55deg);
@@ -358,7 +353,7 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
         filter: alpha(opacity=0);
       }
     }
-    @-moz-keyframes bounce {
+    /* @-moz-keyframes bounce {
       0% {
         opacity: 0;
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -465,10 +460,10 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
         -ms-transform: translateY(0) rotate(-45deg);
         transform: translateY(0) rotate(-45deg);
       }
-    }
+    } */
     @keyframes bounce {
       0% {
-        opacity: 0;
+        opacity: 1;
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         filter: alpha(opacity=0);
         -webkit-transform: translateY(-2000px) rotate(-45deg);
@@ -481,24 +476,24 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
         opacity: 1;
         -ms-filter: none;
         filter: none;
-        -webkit-transform: translateY(30px) rotate(-45deg);
-        -moz-transform: translateY(30px) rotate(-45deg);
-        -o-transform: translateY(30px) rotate(-45deg);
-        -ms-transform: translateY(30px) rotate(-45deg);
-        transform: translateY(30px) rotate(-45deg);
+        -webkit-transform: translateY(5px) rotate(-45deg);
+        -moz-transform: translateY(5px) rotate(-45deg);
+        -o-transform: translateY(5px) rotate(-45deg);
+        -ms-transform: translateY(5px) rotate(-45deg);
+        transform: translateY(5px) rotate(-45deg);
       }
-      80% {
+      /* 80% {
         -webkit-transform: translateY(-10px) rotate(-45deg);
         -moz-transform: translateY(-10px) rotate(-45deg);
         -o-transform: translateY(-10px) rotate(-45deg);
         -ms-transform: translateY(-10px) rotate(-45deg);
         transform: translateY(-10px) rotate(-45deg);
-      }
-      100% {
+      } */
+      /* 100% {
         -webkit-transform: translateY(0) rotate(-45deg);
         -moz-transform: translateY(0) rotate(-45deg);
         -o-transform: translateY(0) rotate(-45deg);
         -ms-transform: translateY(0) rotate(-45deg);
         transform: translateY(0) rotate(-45deg);
-      }
+      } */
     }
