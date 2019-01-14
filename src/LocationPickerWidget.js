@@ -36,18 +36,31 @@ class SelectLocationMap extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.lat != prevProps.lat || this.props.lng != prevProps.lng) {
+      this.setState({
+        showPin: true,
+      });
+    }
+
+  }
+
   toggleMenu() {
-  this.setState({
-    showPin: !this.state.showPin
-  })
-}
+    this.setState({
+      showPin: !this.state.showPin,
+    });
+  }
 
   onDragStart(map) {
-    this.toggleMenu();
+    // debugger;
+    this.setState({
+      showPin: false,
+    });
+
   }
 
   onDragEnd(map) {
-    this.toggleMenu();
+    // this.toggleMenu();
   }
 
   onMoveEnd(map) {
@@ -56,7 +69,6 @@ class SelectLocationMap extends Component {
   }
 
   onStyleLoad(map) {
-
     const geolocateControl = new MapboxGl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
@@ -104,10 +116,8 @@ class SelectLocationMap extends Component {
         style={'mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r'}
         center={[lng, lat]}
         onStyleLoad={this.onStyleLoad}
-        onMoveStart={this.onMoveStart}
-        onMoveEnd={this.onMoveEnd}
         onDragStart={this.onDragStart}
-        onDragEnd={this.onDragEnd}
+        onMoveEnd={this.onMoveEnd}
       >
         <Layer
           type="symbol"
@@ -125,8 +135,8 @@ class SelectLocationMap extends Component {
           /> */}
         </Layer>
 
-                <div className={`pin ${pinDrop}`} />
-                  <div className="pulse" />
+        <div className={`pin ${pinDrop}`} />
+        <div className="pulse" />
       </Map>
     );
   }
@@ -343,34 +353,14 @@ export default class LocationPickerWidget extends React.Component {
       onChange: this.onChange,
     };
 
-
-
     return (
       <div>
-        <div>
-          {/*<Autosuggest
-            ref={autosuggest => {
-              if (autosuggest !== null) {
-                this.autosuggestInput = autosuggest.input;
-              }
-            }}
-            suggestions={this.state.suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            onSuggestionSelected={this.onSuggestionSelected}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-          />
-          */}
-        </div>
         <div className="map-container">
           <SelectLocationMap
             lat={location.position.lat}
             lng={location.position.lng}
             locationUpdated={this.locationUpdated}
           />
-
         </div>
       </div>
     );
