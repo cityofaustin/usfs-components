@@ -189,7 +189,7 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
 
     }
     .pin.hide {
-      display: none;
+      top: 40%;
     }
     .pin:after {
       content: '';
