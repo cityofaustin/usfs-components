@@ -18,6 +18,7 @@
     "filepond": "^3.6.0",
     "filepond-plugin-image-exif-orientation": "^1.0.3",
     "filepond-plugin-image-preview": "^3.1.4",
+    "mapbox-gl-geocoder": "^2.0.1",
     "react": "15",
     "react-autosuggest": "^9.4.2",
     "react-filepond": "^5.0.0",

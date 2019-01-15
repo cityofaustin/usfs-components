@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import * as MapboxGl from 'mapbox-gl';
+
 import Autosuggest from 'react-autosuggest';
 import './LocationPickerWidget.css';
+//importing the geocoder didnt seem to work at first
+const MapboxGeocoder = require('mapbox-gl-geocoder');
 
 const Map = ReactMapboxGl({
   accessToken:
     'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
+});
+
+const geocoderControl = new MapboxGeocoder({
+  accessToken:
+    'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
+  placeholder: 'Enter a location here',
+  // bounding box restricts results to Travis County
+  bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
@@ -14,21 +26,98 @@ const HERE_APP_CODE = `VHZxGy1nmghs2BCbo0cVCQ`;
 class SelectLocationMap extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      center: [-97.7460479736328, 30.266184073558826],
+      showPin: true
+    };
     this.onStyleLoad = this.onStyleLoad.bind(this);
+    this.onMoveEnd = this.onMoveEnd.bind(this);
+    this.onDragStart = this.onDragStart.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.lat != prevProps.lat || this.props.lng != prevProps.lng) {
+      this.setState({
+        showPin: true,
+      });
+    }
+
+  }
+
+  toggleMenu() {
+    this.setState({
+      showPin: !this.state.showPin,
+    });
+  }
+
+  onDragStart(map) {
+    // debugger;
+    this.setState({
+      showPin: false,
+    });
+
+  }
+
+  onDragEnd(map) {
+    // this.toggleMenu();
+  }
+
+  onMoveEnd(map) {
+    const center = map.getCenter();
+    this.props.locationUpdated({ lngLat: center });
   }
 
   onStyleLoad(map) {
+    const geolocateControl = new MapboxGl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      showUserLocation: true,
+    });
+
+    map.addControl(geolocateControl, 'top-left');
+
+    map.addSource('geojson-point', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [],
+      },
+    });
+
+    map.addLayer({
+      id: 'geocoded-point',
+      source: 'geojson-point',
+      type: 'circle',
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#007cbf',
+      },
+    });
+
+    map.addControl(geocoderControl, 'top-left');
+
+    // using mapbox geocoder's event listener to show result
+    // this ought to be linked up with or replace previous code
+    geocoderControl.on('result', function(event) {
+      map.getSource('geojson-point').setData(event.result.geometry);
+    });
+
     map.resize();
   }
 
   render() {
     const { lat, lng } = this.props;
+    const pinDrop = this.state.showPin ? 'show' : 'hide';
+
     return (
       <Map
         style={'mapbox://styles/croweatx/cjow5d6cd3l7g2snrvf17wf0r'}
         center={[lng, lat]}
         onStyleLoad={this.onStyleLoad}
+        onDragStart={this.onDragStart}
+        onMoveEnd={this.onMoveEnd}
       >
         <Layer
           type="symbol"
@@ -38,12 +127,16 @@ class SelectLocationMap extends Component {
             'icon-allow-overlap': true,
           }}
         >
+          {/*
           <Feature
             coordinates={[lng, lat]}
             draggable={true}
-            onDragEnd={this.props.locationUpdated}
-          />
+            onMoveEnd={this.props.locationUpdated}
+          /> */}
         </Layer>
+
+        <div className={`pin ${pinDrop}`} />
+        <div className="pulse" />
       </Map>
     );
   }
@@ -128,7 +221,7 @@ export default class LocationPickerWidget extends React.Component {
           };
 
           const valueJSON = JSON.stringify(location);
-
+          geocoderControl.setInput(location.address);
           this.props.onChange(valueJSON);
         });
       },
@@ -141,6 +234,8 @@ export default class LocationPickerWidget extends React.Component {
       ? this.props.value
       : this.props.schema.formData;
     const location = JSON.parse(valueJSON);
+
+
 
     const newLocation = {
       address: newValue,
@@ -260,28 +355,13 @@ export default class LocationPickerWidget extends React.Component {
 
     return (
       <div>
-        <div>
-          <Autosuggest
-            ref={autosuggest => {
-              if (autosuggest !== null) {
-                this.autosuggestInput = autosuggest.input;
-              }
-            }}
-            suggestions={this.state.suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            onSuggestionSelected={this.onSuggestionSelected}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
+        <div className="map-container">
+          <SelectLocationMap
+            lat={location.position.lat}
+            lng={location.position.lng}
+            locationUpdated={this.locationUpdated}
           />
-          <div onClick={this.getCurrentPosition}>GET LOCATION</div>
         </div>
-        <SelectLocationMap
-          lat={location.position.lat}
-          lng={location.position.lng}
-          locationUpdated={this.locationUpdated}
-        />
       </div>
     );
   }
