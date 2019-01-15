@@ -11,6 +11,8 @@ import DateTimeWidget from '../src/DateTimeWidget';
 import DateTimeReviewWidget from '../src/DateTimeReviewWidget';
 import LocationPickerWidget from '../src/LocationPickerWidget';
 import LocationReviewWidget from '../src/LocationReviewWidget';
+import UberLocation from '../src/UberLocation';
+
 import FileUploadWidget from '../src/FileUploadWidget';
 import FileUploadReviewWidget from '../src/FileUploadReviewWidget';
 import OfficerDetailsDisplayWidget from '../src/OfficerDetailsDisplayWidget';
@@ -58,6 +60,8 @@ locationStories
     ),
     { knobs: { escapeHTML: false } },
   );
+
+storiesOf('Uber Location', module).add('Edit', () => <UberLocation />);
 
 storiesOf('File Upload', module)
   .add('Edit', () => <FileUploadWidget />)
