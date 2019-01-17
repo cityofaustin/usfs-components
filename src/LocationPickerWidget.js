@@ -17,7 +17,7 @@ const geocoderControl = new MapboxGeocoder({
     'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
   placeholder: 'Enter a location here',
   // bounding box restricts results to Travis County
-  bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
+  // bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
