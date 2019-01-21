@@ -15,7 +15,7 @@ import uuid from 'uuid';
 
 const endpoint = process.env.API_URL;
 
-class FileUpload extends Component {
+class FileUploadWidget extends Component {
   constructor(props) {
     super(props);
       const uniqueid = crypto.createHmac('sha256', uuid.v4()).digest('hex');
@@ -242,4 +242,4 @@ class FileUpload extends Component {
   }
 }
 
-export default FileUpload;
+export default FileUploadWidget;
