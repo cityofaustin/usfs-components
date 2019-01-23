@@ -1,4 +1,6 @@
 var path = require('path');
+const webpack = require('webpack');
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -11,7 +13,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|build)/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -28,4 +30,12 @@ module.exports = {
   externals: {
     react: 'commonjs react',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+        API_URL: JSON.stringify(process.env.API_URL || "https://localhost:5000")
+      },
+    })
+  ]
 };
