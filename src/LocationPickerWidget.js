@@ -18,6 +18,8 @@ const geocoderControl = new MapboxGeocoder({
   placeholder: 'Enter a location here',
   // bounding box restricts results to Travis County
   // bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
+  // jk, USA for now
+  bbox: [ 144.4,-14.8,-64.4,71.6 ]
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
