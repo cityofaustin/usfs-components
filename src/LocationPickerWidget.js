@@ -5,7 +5,7 @@ import * as MapboxGl from 'mapbox-gl';
 import Autosuggest from 'react-autosuggest';
 import './LocationPickerWidget.css';
 //importing the geocoder didnt seem to work at first
-const MapboxGeocoder = require('mapbox-gl-geocoder');
+const MapboxGeocoder = require('@mapbox/mapbox-gl-geocoder');
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -18,8 +18,12 @@ const geocoderControl = new MapboxGeocoder({
   placeholder: 'Enter a location here',
   // bounding box restricts results to Travis County
   // bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
-  // jk, USA for now
-  bbox: [ 144.4,-14.8,-64.4,71.6 ]
+  // or texas
+  bbox: [-130.4,22.8,-69.2,50.4],
+  // or by country:
+  // countries: 'us',
+  limit: 5,
+  trackProximity: true,
 });
 
 const HERE_APP_ID = `NwvYKNdIJp8nYo74bUTU`;
@@ -30,7 +34,7 @@ class SelectLocationMap extends Component {
     super(props);
     this.state = {
       center: [-97.7460479736328, 30.266184073558826],
-      showPin: true
+      showPin: true,
     };
     this.onStyleLoad = this.onStyleLoad.bind(this);
     this.onMoveEnd = this.onMoveEnd.bind(this);
@@ -44,7 +48,6 @@ class SelectLocationMap extends Component {
         showPin: true,
       });
     }
-
   }
 
   toggleMenu() {
@@ -58,7 +61,6 @@ class SelectLocationMap extends Component {
     this.setState({
       showPin: false,
     });
-
   }
 
   onDragEnd(map) {
@@ -79,6 +81,8 @@ class SelectLocationMap extends Component {
     });
 
     map.addControl(geolocateControl, 'top-left');
+
+
 
     map.addSource('geojson-point', {
       type: 'geojson',
@@ -105,6 +109,20 @@ class SelectLocationMap extends Component {
     geocoderControl.on('result', function(event) {
       map.getSource('geojson-point').setData(event.result.geometry);
     });
+
+    map.on('load', updateGeocoderProximity); // set proximity on map load
+    map.on('moveend', updateGeocoderProximity); // and then update proximity each time the map moves
+
+    function updateGeocoderProximity() {
+      // proximity is designed for local scale, if the user is looking at the whole world,
+      // it doesn't make sense to factor in the arbitrary centre of the map
+      if (map.getZoom() > 9) {
+        var center = map.getCenter().wrap(); // ensures the longitude falls within -180 to 180 as the Geocoding API doesn't accept values outside this range
+        geocoderControl.setProximity({ longitude: center.lng, latitude: center.lat });
+      } else {
+        geocoderControl.setProximity(null);
+      }
+    }
 
     map.resize();
   }
@@ -236,8 +254,6 @@ export default class LocationPickerWidget extends React.Component {
       ? this.props.value
       : this.props.schema.formData;
     const location = JSON.parse(valueJSON);
-
-
 
     const newLocation = {
       address: newValue,
