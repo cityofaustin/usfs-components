@@ -16,10 +16,11 @@ const geocoderControl = new MapboxGeocoder({
   accessToken:
     'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
   placeholder: 'Enter a location here',
+  
   // bounding box restricts results to Travis County
-  // bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
+  bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
   // or texas
-  bbox: [-130.4,22.8,-69.2,50.4],
+  // bbox: [65,25.84,-93.51,36.5],
   // or by country:
   // countries: 'us',
   limit: 5,
