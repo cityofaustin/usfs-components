@@ -19,10 +19,6 @@ class FileUpload extends Component {
   constructor(props) {
     super(props);
       const uniqueid = crypto.createHmac('sha256', uuid.v4()).digest('hex');
-      console.log("Unique Identifier: " + uniqueid);
-
-      console.log("End-point (API_URL): " + endpoint);
-
       this.state = {
         uniqueIdentifier: uniqueid,
         files: [],
@@ -39,7 +35,6 @@ class FileUpload extends Component {
   }
 
   handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
-    console.log('Whoa! We are actually running a custom thing');
     // fieldName is the name of the input field
     // file is the actual file object to send
     const formData = new FormData();
@@ -50,28 +45,21 @@ class FileUpload extends Component {
     let fields = [];
 
     if (fileSignature == null) {
-      console.log(file);
       console.log('The file signature for file could not be located.');
     }
 
-    console.log(fileSignature);
-
     try {
       fields = Object.keys(fileSignature['fields']);
-      console.log('handleUpload() Object keys loaded');
     } catch (error) {
       fields = [];
-      console.log("Yikes, no good: ");
+      console.log("Error: ");
       console.log(error);
     }
 
     for (const key of fields) {
-      console.log(key + ' = ' + fileSignature['fields'][key]);
       formData.append(key, fileSignature['fields'][key]);
     }
-    console.log('fieldName:' + fieldName);
 
-    console.log('key:' + fileSignature['fields']['key']);
     formData.append('file', file, fileSignature['fields']['key']);
 
     const request = new XMLHttpRequest();
@@ -121,9 +109,6 @@ class FileUpload extends Component {
   }
 
   parseSignatureResponse(res) {
-    console.log('parseSignatureResponse: ');
-    console.log(res['filename']);
-    console.log(res['creds']['fields'] || 'Invalid response');
     this.fileList.push(res);
 
     const value = this.fileList.length
@@ -131,13 +116,6 @@ class FileUpload extends Component {
       : false;
 
     this.props.onChange(value);
-
-    // this.props.onChange(this.fileList);
-
-    console.log('WE HAVE FILES UPDATED:');
-    console.log(this.props.value);
-
-    console.log(this.fileList);
 
     this.setState({
       fileList: [...this.fileList],
@@ -164,12 +142,6 @@ class FileUpload extends Component {
   }
 
   handleFileAdded(error, file) {
-    console.log('handleFileAdded() Errors: ');
-    console.log(error);
-    console.log('handleFileAdded() File just added: ' + file.filename);
-    console.log('handleFileAdded() File Object: ');
-    console.log(file);
-
     this.retrieveFileSignature(file.filename, this.state.uniqueIdentifier);
   }
 
@@ -184,13 +156,10 @@ class FileUpload extends Component {
         });
       }
     }
-
-    console.log(this.state.fileList);
   }
 
   getFileSignatureFromList(file) {
     let uploadedFileName = file.name || '';
-    console.log('getFileSignatureFromList() We are looking for: ' + uploadedFileName);
 
     for (let i in this.fileList) {
       let currentFile = this.fileList[i];
