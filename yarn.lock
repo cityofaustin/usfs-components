@@ -4676,6 +4676,11 @@ filename-regex@^2.0.0:
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
   integrity sha1-wcS5vuPglyXdsQa3XB4wH+LxiyY=
 
+filepond-plugin-file-validate-size@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/filepond-plugin-file-validate-size/-/filepond-plugin-file-validate-size-2.1.1.tgz#b44f04a575d3eda38c184ba38cfa18b2420858e7"
+  integrity sha512-5SoykRvFaZ2h65JpjyKXGnvTUeNvMIjfNm2nrGsVIYRPVFguNeO7Kp/jBMhIVuhsF44gIR/ETLuazEXD87tLdg==
+
 filepond-plugin-image-exif-orientation@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/filepond-plugin-image-exif-orientation/-/filepond-plugin-image-exif-orientation-1.0.3.tgz#b2914b5fd8ec1bc5fc2eb1b0c969275fdbcf9198"

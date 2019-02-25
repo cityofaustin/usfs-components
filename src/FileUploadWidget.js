@@ -4,8 +4,13 @@ import { FilePond, File, registerPlugin } from 'react-filepond';
 
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+              FilePondPluginImageExifOrientation,
+              FilePondPluginImagePreview,
+              FilePondPluginFileValidateSize
+);
 
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
@@ -31,7 +36,7 @@ class FileUpload extends Component {
   }
 
   handleInit() {
-    console.log('FilePond instance has initialised', this.pond);
+    console.log('FilePond instance has initialised.');
   }
 
   handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
@@ -123,8 +128,6 @@ class FileUpload extends Component {
   }
 
   retrieveFileSignature (key, uniqueIdentifier) {
-    console.log("retrieveFileSignature: " + key + ", " + uniqueIdentifier);
-
     var formData = new FormData();
 
     formData.append('key', key);
@@ -188,7 +191,11 @@ class FileUpload extends Component {
           <FilePond
             ref={ref => (this.pond = ref)}
             allowMultiple={true}
-            maxFiles={10}
+            allowFileSizeValidation={true}
+
+            maxFiles={100}
+            maxFileSize="20000MB"
+
             /* FilePond allows a custom process to handle uploads */
             server={{
               process: this.handleProcessing.bind(this),
