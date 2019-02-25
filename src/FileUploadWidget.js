@@ -116,9 +116,17 @@ class FileUpload extends Component {
   parseSignatureResponse(res) {
     this.fileList.push(res);
 
-    const value = this.fileList.length
-      ? JSON.stringify(this.fileList.map(f => `${f.creds.fields.key}`))
-      : false;
+    let value = false;
+
+    try {
+      value = this.fileList.length
+        ? JSON.stringify(this.fileList.map(f => `${f.creds.fields.key}`))
+        : false;
+    } catch(error) {
+      console.log("parseSignatureResponse() Error: ");
+      console.log(error);
+      value = false;
+    }
 
     this.props.onChange(value);
 
