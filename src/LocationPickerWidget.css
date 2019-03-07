@@ -4,7 +4,6 @@
 
 .mapboxgl-map {
   min-height: 300px;
-
 }
 
 /* Basics */
@@ -21,14 +20,14 @@
   position:relative;
   background-color:white;
   width:100%;
-  min-width:240px;
+  min-width:100%;
   /* max-width:600px; */
   z-index:1;
   border-radius:3px;
   }
 
 .mapboxgl-ctrl-geocoder input[type='text'] {
-  font-size:12px;
+  font-size:16px;
   width:100%;
   border:0;
   background-color:transparent;
