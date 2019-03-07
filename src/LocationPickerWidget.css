@@ -17,7 +17,7 @@
           box-sizing:border-box;
   }
 .mapboxgl-ctrl-geocoder {
-  font:15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font:16px;
   position:relative;
   background-color:white;
   width:100%;
@@ -496,4 +496,9 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
         -ms-transform: translateY(0) rotate(-45deg);
         transform: translateY(0) rotate(-45deg);
       } */
+    }
+
+
+    .mapboxgl-ctrl-group .mapboxgl-ctrl-compass {
+    display: none;
     }
