@@ -74,16 +74,15 @@ class SelectLocationMap extends Component {
   }
 
   onStyleLoad(map) {
-    const geolocateControl = new MapboxGl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-      },
-      showUserLocation: true,
-    });
+    const zoomControl = new MapboxGl.NavigationControl();
 
-    map.addControl(geolocateControl, 'top-left');
+    map.addControl(zoomControl, 'bottom-right');
 
+    // disable map rotation using right click + drag
+    map.dragRotate.disable();
 
+    // disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
 
     map.addSource('geojson-point', {
       type: 'geojson',
@@ -119,7 +118,10 @@ class SelectLocationMap extends Component {
       // it doesn't make sense to factor in the arbitrary centre of the map
       if (map.getZoom() > 9) {
         var center = map.getCenter().wrap(); // ensures the longitude falls within -180 to 180 as the Geocoding API doesn't accept values outside this range
-        geocoderControl.setProximity({ longitude: center.lng, latitude: center.lat });
+        geocoderControl.setProximity({
+          longitude: center.lng,
+          latitude: center.lat,
+        });
       } else {
         geocoderControl.setProximity(null);
       }
