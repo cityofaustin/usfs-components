@@ -4,7 +4,7 @@ import Emoji from '../Emoji';
 import Flatpickr from 'react-flatpickr';
 import { set, cloneDeep } from 'lodash';
 
-import {parseISODate, formatISOPartialDate} from './dateHelpers';
+import {formatYear, formatDayMonth, parseISODate, formatISOPartialDate} from './dateHelpers';
 
 import 'flatpickr/dist/themes/material_green.css';
 import './DateWidget.css';
@@ -34,14 +34,53 @@ export default class DateWidget extends React.Component {
   }
 
   isIncomplete({month, day, year}) {
-    return
-      !month || !day || !year
+    console.log("is it incomplete?", (!month || !day || !year))
+    return (!month || !day || !year)
   }
 
   handleFormChange(field, value) {
+    const currentYear = (new Date()).getFullYear();
+
+    if (field === "month") {
+      if ((value > 12)) {
+        return
+      }
+      if (value < 1) {
+        value = "";
+      }
+    }
+    if (field === "day") {
+      if (value > 31) {
+        return
+      }
+      if (value < 1) {
+        value = "";
+      }
+    }
+    if (field === "year") {
+      if (value > currentYear) {
+        value = currentYear;
+      }
+      if (value < 1) {
+        value = "";
+      }
+    }
+
     let newState = cloneDeep(this.state);
-    set(newState, ["value", field], value);
+    let formatter = (field === "year") ? formatYear : formatDayMonth;
+
+    set(newState, ["value", field], formatter(value));
     set(newState, ['touched', field], true);
+
+    // Autofill year after filling month and day
+    if (
+      (
+        ((field === "day") && (!!this.state.value.month)) ||
+        ((field === "month") && (!!this.state.value.day))
+      ) && (this.state.value.year === "")
+    ) {
+      set(newState, ['value', "year"], currentYear);
+    }
     console.log("Form new State", newState);
 
     this.setState(newState, () => {
@@ -82,7 +121,6 @@ export default class DateWidget extends React.Component {
       <div className="date-widget-container">
         <span> state date: {formatISOPartialDate({month,day,year})} </span><br/>
 
-        <span className="usa-form-hint" id="dateHint">For example: 04 28 2018</span>
         <div className='date-widget-values-container'>
           <fieldset className='date-fieldset'>
             <div className="usa-date-of-birth">

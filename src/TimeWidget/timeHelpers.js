@@ -24,7 +24,7 @@ export function formatTime({ hour, minute, period }) {
 }
 
 export function formatHourMinute(val) {
-  if (val === "") return ""
+  if (val === "") return "";
   val = Number(val);
   if (val || (val === 0)) {
     const hourOrMinute = val.toString();

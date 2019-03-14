@@ -30,8 +30,8 @@ export default class TimeWidget extends React.Component {
   }
 
   isIncomplete({hour, minute}) {
-    return
-      !hour || (!minute && !minute.length)
+    console.log("is it incomplete?", (!hour || !minute))
+    return (!hour || !minute)
   }
 
   handleFormChange(field, value) {
@@ -56,6 +56,8 @@ export default class TimeWidget extends React.Component {
     let newState = cloneDeep(this.state);
     set(newState, ["value", field], formatHourMinute(value));
     set(newState, ['touched', field], true);
+
+    // Autofill minute after filling hour
     if ((field === "hour") && (this.state.value.minute === "")) {
       set(newState, ['value', "minute"], "00");
     }

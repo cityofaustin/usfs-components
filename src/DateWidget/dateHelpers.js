@@ -23,14 +23,13 @@ export function formatISOPartialDate({ month, day, year }) {
   return undefined;
 }
 
-function formatYear(val) {
-  if (!val || !val.length) {
-    return '';
-  }
+export function formatYear(val) {
   return val;
 }
 
-function formatDayMonth(val) {
+export function formatDayMonth(val) {
+  if (val === "") return "";
+  val = Number(val);
   if (val) {
     const dayOrMonth = val.toString();
     if (Number(dayOrMonth) && dayOrMonth.length === 1) {
