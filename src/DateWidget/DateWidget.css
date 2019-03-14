@@ -4,8 +4,14 @@
 .date-widget-values-container {
 }
 
+/* Fix bug when rendering on OPO form */
+.usa-form-group-year-fix {
+  margin-top: 0px !important;
+}
+
 .date-fieldset {
   display: inline-block;
+  width: auto;
 }
 
 .flatpickr-container {

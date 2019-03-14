@@ -79,13 +79,7 @@ export default class DateWidget extends React.Component {
     console.log("tell me about flatpickrDate", flatpickrDate)
     return (
       <div className="date-widget-container">
-        <span
-          className="usa-input-error-message"
-          role="alert"
-        >
-          Please enter a valid date
-        </span>
-        <span> state: {formatISOPartialDate({month,day,year})} </span><br/>
+        <span> state date: {formatISOPartialDate({month,day,year})} </span><br/>
 
         <span className="usa-form-hint" id="dateHint">For example: 04 28 2018</span>
         <div className='date-widget-values-container'>
@@ -107,7 +101,7 @@ export default class DateWidget extends React.Component {
                   onChange={(event) => this.handleFormChange('day', event.target.value)}
                 />
               </div>
-              <div className="usa-datefield usa-form-group usa-form-group-year">
+              <div className="usa-datefield usa-form-group usa-form-group-year usa-form-group-year-fix">
                 <label className="input-date-label" htmlFor={`${id}Year`}>Year</label>
                 <input
                   className="usa-input-inline" id={`${id}Year`} name={`${id}Year`}
