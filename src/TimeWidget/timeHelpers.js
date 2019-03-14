@@ -24,11 +24,13 @@ export function formatTime({ hour, minute, period }) {
 }
 
 export function formatHourMinute(val) {
-  if (val || val.length) {
+  if (val === "") return ""
+  val = Number(val);
+  if (val || (val === 0)) {
     const hourOrMinute = val.toString();
-    if (Number(hourOrMinute) && hourOrMinute.length === 1) {
+    if (!isNaN(hourOrMinute) && hourOrMinute.length === 1) {
       return `0${val}`;
-    } else if (Number(hourOrMinute)) {
+    } else if (!isNaN(hourOrMinute)) {
       return hourOrMinute;
     }
   }
