@@ -1,4 +1,3 @@
-
 // dateString will be either a string in the form "2011-11-11" or undefined
 export function parseISODate(dateString) {
   if (typeof dateString === 'string') {
@@ -17,9 +16,6 @@ export function parseISODate(dateString) {
 }
 
 export function formatISOPartialDate({ month, day, year }) {
-  console.log("month", month)
-  console.log('day', day)
-  console.log("year", year)
   if (month && day && year) {
     return `${formatYear(year)}-${formatDayMonth(month)}-${formatDayMonth(day)}`;
   }

@@ -18,7 +18,6 @@ export default class DateWidget extends React.Component {
 
     this.state = {
       value: parseISODate(this.props.value),
-      invalidDate: false,
       touched: {
         month: false,
         day: false,
@@ -47,8 +46,10 @@ export default class DateWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
+        console.log("Sending nothing")
         this.props.onChange();
       } else {
+        console.log("Sending", formatISOPartialDate(newState.value))
         this.props.onChange(formatISOPartialDate(newState.value));
       }
     });
@@ -62,8 +63,10 @@ export default class DateWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
+        console.log("Sending nothing")
         this.props.onChange();
       } else {
+        console.log("Sending", formatISOPartialDate(newState.value))
         this.props.onChange(formatISOPartialDate(newState.value));
       }
     })
@@ -72,11 +75,9 @@ export default class DateWidget extends React.Component {
   render() {
     const {id} = this.props;
     const {month, day, year} = this.state.value;
-    const {invalidDate} = this.state;
     const flatpickrDate = (month && day && year) ?
       formatISOPartialDate({month,day,year}) : undefined;
 
-    console.log("tell me about flatpickrDate", flatpickrDate)
     return (
       <div className="date-widget-container">
         <span> state date: {formatISOPartialDate({month,day,year})} </span><br/>

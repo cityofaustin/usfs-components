@@ -36,3 +36,26 @@
 .emoji {
   font-size: 2em;
 }
+
+/* Replicate ".usa-date-of-birth label" styling rule */
+.time-widget-container label {
+  margin-top: 0px;
+}
+
+.time-widget-values-container {
+}
+
+.time-period-select-container {
+  display: inline-block;
+  vertical-align: text-bottom;
+  padding-bottom: 5px;
+}
+
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
