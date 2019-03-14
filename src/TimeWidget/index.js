@@ -22,7 +22,8 @@ export default class TimeWidget extends React.Component {
       },
     }
     this.onChange = this.onChange.bind(this);
-    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handlePeriodChange = this.handlePeriodChange.bind(this);
   }
 
   onChange({ dates, datestring }) {
@@ -30,11 +31,10 @@ export default class TimeWidget extends React.Component {
   }
 
   isIncomplete({hour, minute}) {
-    console.log("is it incomplete?", (!hour || !minute))
     return (!hour || !minute)
   }
 
-  handleFormChange(field, value) {
+  handleTimeChange(field, value) {
     // Only allow integer values
     if ((value !== "") && (!/^\d+$/.test(value)) && (value.length <= 2)) {
       return
@@ -73,6 +73,21 @@ export default class TimeWidget extends React.Component {
     });
   }
 
+  handlePeriodChange(period) {
+    let newState = cloneDeep(this.state);
+    set(newState, ["value", "period"], period);
+
+    this.setState(newState, () => {
+      if (this.isIncomplete(newState.value)) {
+        console.log("Sending nothing")
+        this.props.onChange();
+      } else {
+        console.log("Sending", formatTime(newState.value))
+        this.props.onChange(formatTime(newState.value));
+      }
+    });
+  }
+
   render() {
     const {id} = this.props;
     const {hour,minute,period} = this.state.value;
@@ -85,18 +100,21 @@ export default class TimeWidget extends React.Component {
             <TimeInput
               id={id}
               type={"Hour"}
-              onChange={this.handleFormChange}
+              onChange={this.handleTimeChange}
               value={hour}
             />
             <TimeInput
               id={id}
               type={"Minute"}
-              onChange={this.handleFormChange}
+              onChange={this.handleTimeChange}
               value={minute}
             />
           </fieldset>
           <div className="time-period-select-container">
-            <select className="date-fieldset" name={`${id}am_pm_period`} id={`${id}am_pm_period`}>
+            <select
+              className="date-fieldset" name={`${id}am_pm_period`} id={`${id}am_pm_period`}
+              onChange={event => this.handlePeriodChange(event.target.value)}
+            >
               <option value="AM">AM</option>
               <option value="PM">PM</option>
             </select>
