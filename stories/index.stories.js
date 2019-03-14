@@ -7,8 +7,8 @@ import { linkTo } from '@storybook/addon-links';
 
 import { withState } from '@dump247/storybook-state';
 
-import DateTimeWidget from '../src/DateTimeWidget';
-import DateTimeReviewWidget from '../src/DateTimeReviewWidget';
+import DateWidget from '../src/DateWidget';
+import DateReviewWidget from '../src/DateReviewWidget';
 import LocationPickerWidget from '../src/LocationPickerWidget';
 import LocationReviewWidget from '../src/LocationReviewWidget';
 import FileUploadWidget from '../src/FileUploadWidget';
@@ -23,10 +23,10 @@ dateTimeStories.addDecorator(withKnobs);
 
 dateTimeStories
   .add('Edit', () => (
-    <DateTimeWidget value={text('Date/Time', '2011-11-11 11:11 PM')} />
+    <DateWidget value={text('Date', '2018-11-11')} />
   ))
   .add('Review', () => (
-    <DateTimeReviewWidget value={text('Date/Time', '2011-11-11 11:11 PM')} />
+    <DateReviewWidget value={text('Date', '2018-11-11')} />
   ));
 
 const locationStories = storiesOf('Location', module);

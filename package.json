@@ -21,6 +21,7 @@
     "filepond-plugin-file-validate-size": "^2.1.1",
     "filepond-plugin-image-exif-orientation": "^1.0.3",
     "filepond-plugin-image-preview": "^3.1.4",
+    "moment": "^2.24.0",
     "react": "15",
     "react-autosuggest": "^9.4.2",
     "react-filepond": "^5.0.0",

@@ -1,3 +1,7 @@
+.date-widget-container {
+  display: inline-block;
+}
+
 .flatpickr-input-button {
   cursor: pointer;
   padding-left: 5px;
@@ -5,17 +9,9 @@
 
 .flatpickr-input-box {
   font-size: 1em;
-  width: 80px;
+  width: 120px;
   text-align: center;
-}
-
-.expired-reopen-date {
-  color: red;
-  cursor: pointer;
-}
-
-.eliminated {
-  display: none;
+  display: inline;
 }
 
 .hidden-input-box {
@@ -25,4 +21,8 @@
   height: 25px;
   box-sizing: border-box;
   visibility: hidden;
+}
+
+.emoji {
+  font-size: 1.25em;
 }
