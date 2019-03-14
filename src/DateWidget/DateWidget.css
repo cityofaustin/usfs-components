@@ -1,28 +1,32 @@
 .date-widget-container {
+}
+
+.date-widget-values-container {
+}
+
+.date-fieldset {
   display: inline-block;
+}
+
+.flatpickr-container {
+  display: inline-block;
+  vertical-align: text-bottom;
+  padding-bottom: 8px;
+}
+
+.hidden-flatpickr-input-box {
+  width: 0px;
+  padding: 0 0;
+  border: none;
+  display: inline;
+  font-size: 0em;
+  height: 0px;
 }
 
 .flatpickr-input-button {
   cursor: pointer;
-  padding-left: 5px;
-}
-
-.flatpickr-input-box {
-  font-size: 1em;
-  width: 120px;
-  text-align: center;
-  display: inline;
-}
-
-.hidden-input-box {
-  width: 0;
-  border: 0;
-  padding: 0;
-  height: 25px;
-  box-sizing: border-box;
-  visibility: hidden;
 }
 
 .emoji {
-  font-size: 1.25em;
+  font-size: 2em;
 }

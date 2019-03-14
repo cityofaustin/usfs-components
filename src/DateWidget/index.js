@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Emoji from '../Emoji';
 import Flatpickr from 'react-flatpickr';
-import set from 'lodash';
+import { set, cloneDeep } from 'lodash';
 
 import {parseISODate, formatISOPartialDate} from './dateHelpers';
 
@@ -10,7 +10,7 @@ import 'flatpickr/dist/themes/material_green.css';
 import './DateWidget.css';
 
 // Returns datestring in the form "2011-11-11"
-// Cannibalizes parts of us-form-system's DateWidget. Includes a Calendar date picker.
+// Uses parts of us-form-system's DateWidget. Includes a Calendar date picker.
 // ref: https://github.com/cityofaustin/us-forms-system/blob/master/src/js/widgets/DateWidget.jsx
 export default class DateWidget extends React.Component {
   constructor(props) {
@@ -26,6 +26,8 @@ export default class DateWidget extends React.Component {
       },
     }
     this.onChange = this.onChange.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleFlatpickrChange = this.handleFlatpickrChange.bind(this);
   }
 
   onChange({ dates, datestring }) {
@@ -37,10 +39,11 @@ export default class DateWidget extends React.Component {
       !month || !day || !year
   }
 
-
-  handleChange(field, value) {
-    let newState = set(['value', field], value, this.state);
-    newState = set(['touched', field], true, newState);
+  handleFormChange(field, value) {
+    let newState = cloneDeep(this.state);
+    set(newState, ["value", field], value);
+    set(newState, ['touched', field], true);
+    console.log("Form new State", newState);
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
@@ -49,6 +52,21 @@ export default class DateWidget extends React.Component {
         this.props.onChange(formatISOPartialDate(newState.value));
       }
     });
+  }
+
+  handleFlatpickrChange(dateString) {
+    let newState = cloneDeep(this.state);
+    set(newState, "value", parseISODate(dateString));
+    set(newState, 'touched', {month: true, day: true, year: true});
+    console.log("Flatpickr new State", newState);
+
+    this.setState(newState, () => {
+      if (this.isIncomplete(newState.value)) {
+        this.props.onChange();
+      } else {
+        this.props.onChange(formatISOPartialDate(newState.value));
+      }
+    })
   }
 
   render() {
@@ -67,18 +85,18 @@ export default class DateWidget extends React.Component {
         >
           Please enter a valid date
         </span>
-        <span> hiiiii {formatISOPartialDate({month,day,year})} </span>
+        <span> state: {formatISOPartialDate({month,day,year})} </span><br/>
 
-        <form>
-          <fieldset>
-            <span className="usa-form-hint" id="dateHint">For example: 04 28 2018</span>
+        <span className="usa-form-hint" id="dateHint">For example: 04 28 2018</span>
+        <div className='date-widget-values-container'>
+          <fieldset className='date-fieldset'>
             <div className="usa-date-of-birth">
               <div className="usa-datefield usa-form-group usa-form-group-month">
                 <label className="input-date-label" htmlFor={`${id}Month`}>Month</label>
                 <input
                   className="usa-input-inline" id={`${id}Month`} name={`${id}Month`}
                   type="number" min="1" max="12" value={month}
-                  onChange={(event) => this.handleChange('month', event.target.value)}
+                  onChange={(event) => this.handleFormChange('month', event.target.value)}
                 />
               </div>
               <div className="usa-datefield usa-form-group usa-form-group-day">
@@ -86,7 +104,7 @@ export default class DateWidget extends React.Component {
                 <input
                   className="usa-input-inline" id={`${id}Day`} name={`${id}Day`}
                   type="number" min="1" max="31" value={day}
-                  onChange={(event) => this.handleChange('day', event.target.value)}
+                  onChange={(event) => this.handleFormChange('day', event.target.value)}
                 />
               </div>
               <div className="usa-datefield usa-form-group usa-form-group-year">
@@ -94,73 +112,35 @@ export default class DateWidget extends React.Component {
                 <input
                   className="usa-input-inline" id={`${id}Year`} name={`${id}Year`}
                   type="number" min="1900" value={year}
-                  onChange={(event) => this.handleChange('year', event.target.value)}
+                  onChange={(event) => this.handleFormChange('year', event.target.value)}
                 />
               </div>
             </div>
           </fieldset>
-        </form>
 
-        <Flatpickr
-          options={{
-            dateFormat: 'Y-m-d',
-            maxDate: 'today',
-            wrap: true,
-            allowInput: false,
-            enableTime: false,
-          }}
-          value={flatpickrDate}
-          onChange={(dates, datestring) => this.onChange({ dates, datestring })}
-        >
-          <input className={`flatpickr-input-box`} type="text" data-input />
-          <span className="flatpickr-input-button" title="toggle" data-toggle>
-            <Emoji symbol="📅" label="calendar"/>
-          </span>
-        </Flatpickr>
+          <div className='flatpickr-container'>
+            <Flatpickr
+              options={{
+                dateFormat: 'Y-m-d',
+                maxDate: 'today',
+                wrap: true,
+                allowInput: false,
+                enableTime: false,
+              }}
+              value={flatpickrDate}
+              onChange={(dates, datestring) => this.handleFlatpickrChange(datestring)}
+            >
+              <input className={`hidden-flatpickr-input-box`} tabIndex="-1" type="text" data-input />
+              <span className="flatpickr-input-button" title="toggle" data-toggle>
+                <Emoji symbol="📅" label="calendar"/>
+              </span>
+            </Flatpickr>
+          </div>
+        </div>
       </div>
     );
   }
 }
-
-/**
-<div className="usa-date-of-birth row">
-  <div className="form-datefield-month">
-    <label className="input-date-label" htmlFor={`${id}Month`}>Month</label>
-    <select
-      name={`${id}Month`}
-      id={`${id}Month`}
-      value={month}
-      onChange={(event) => this.handleChange('month', event.target.value)}>
-      <option value=""/>
-      {months.map(mnth => <option key={mnth.value} value={mnth.value}>{mnth.label}</option>)}
-    </select>
-  </div>
-  {!monthYear && <div className="form-datefield-day">
-    <label className="input-date-label" htmlFor={`${id}Day`}>Day</label>
-    <select
-      name={`${id}Day`}
-      id={`${id}Day`}
-      value={day}
-      onChange={(event) => this.handleChange('day', event.target.value)}>
-      <option value=""/>
-      {daysForSelectedMonth && daysForSelectedMonth.map(dayOpt => <option key={dayOpt} value={dayOpt}>{dayOpt}</option>)}
-    </select>
-  </div>}
-  <div className="usa-datefield usa-form-group usa-form-group-year">
-    <label className="input-date-label" htmlFor={`${id}Year`}>Year</label>
-    <input type="number"
-      autoComplete={options.autocomplete}
-      name={`${id}Year`}
-      id={`${id}Year`}
-      max="3000"
-      min="1900"
-      pattern="[0-9]{4}"
-      value={year}
-      onBlur={() => this.handleBlur('year')}
-      onChange={(event) => this.handleChange('year', event.target.value)}/>
-  </div>
-</div>
-**/
 
 DateWidget.propTypes = {
   id: PropTypes.string.isRequired,
