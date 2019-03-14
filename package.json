@@ -27,6 +27,7 @@
     "react-flatpickr": "^3.6.4",
     "react-mapbox-gl": "3.9.2",
     "react-query-params": "^1.0.9",
+    "us-forms-system": "https://github.com/cityofaustin/us-forms-system.git",
     "uswds": "^1.6.9",
     "webpack": "^4.27.1"
   },
