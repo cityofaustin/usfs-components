@@ -1,0 +1,66 @@
+.date-widget-container {
+}
+
+.date-widget-values-container {
+}
+
+/* Fix bug when rendering on OPO form */
+.usa-form-group-year-fix {
+  margin-top: 0px !important;
+}
+
+.date-fieldset {
+  display: inline-block;
+  width: auto;
+  position: relative;
+}
+
+.flatpickr-container {
+  /* Adjust position to account for not having a label*/
+  position: absolute;
+  bottom: 0px;
+  display: inline-block;
+}
+
+.hidden-flatpickr-input-box {
+  width: 0px;
+  padding: 0 0;
+  border: none;
+  display: inline;
+  font-size: 0em;
+  height: 0px;
+}
+
+.flatpickr-input-button {
+  cursor: pointer;
+}
+
+.emoji {
+  font-size: 2em;
+}
+
+/* Replicate ".usa-date-of-birth label" styling rule */
+.time-widget-container label {
+  margin-top: 0px;
+}
+
+.time-widget-container {
+  position: relative;
+}
+
+.time-period-select-container {
+  /* Adjust position to account for not having a label*/
+  position: absolute;
+  bottom: 0;
+  display: inline-block;
+  width: 4.5em;
+}
+
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}

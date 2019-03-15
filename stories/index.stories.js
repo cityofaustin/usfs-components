@@ -7,8 +7,10 @@ import { linkTo } from '@storybook/addon-links';
 
 import { withState } from '@dump247/storybook-state';
 
-import DateTimeWidget from '../src/DateTimeWidget';
-import DateTimeReviewWidget from '../src/DateTimeReviewWidget';
+import DateWidget from '../src/DateWidget';
+import DateReviewWidget from '../src/DateReviewWidget';
+import TimeWidget from '../src/TimeWidget';
+import TimeReviewWidget from '../src/TimeReviewWidget';
 import LocationPickerWidget from '../src/LocationPickerWidget';
 import LocationReviewWidget from '../src/LocationReviewWidget';
 import FileUploadWidget from '../src/FileUploadWidget';
@@ -18,15 +20,26 @@ import WitnessDetailsDisplayWidget from '../src/WitnessDetailsDisplayWidget';
 
 import '../node_modules/uswds/dist/css/uswds.min.css';
 
-const dateTimeStories = storiesOf('Date Time', module);
-dateTimeStories.addDecorator(withKnobs);
+const dateStories = storiesOf('Date', module);
+dateStories.addDecorator(withKnobs);
 
-dateTimeStories
+dateStories
   .add('Edit', () => (
-    <DateTimeWidget value={text('Date/Time', '2011-11-11 11:11 PM')} />
+    <DateWidget id="root_date" value={text('Date', '2018-11-11')} />
   ))
   .add('Review', () => (
-    <DateTimeReviewWidget value={text('Date/Time', '2011-11-11 11:11 PM')} />
+    <DateReviewWidget value={text('Date', '2018-11-11')} />
+  ));
+
+const timeStories = storiesOf('Time', module);
+timeStories.addDecorator(withKnobs);
+
+timeStories
+  .add('Edit', () => (
+    <TimeWidget id="root_time" value={text('Date', '9:30 pm')} />
+  ))
+  .add('Review', () => (
+    <TimeReviewWidget value={text('Date', '9:30 pm')} />
   ));
 
 const locationStories = storiesOf('Location', module);
