@@ -145,27 +145,26 @@ export default class DateWidget extends React.Component {
                   onChange={(event) => this.handleFormChange('year', event.target.value)}
                 />
               </div>
+              <div className='usa-datefield usa-form-group flatpickr-container'>
+                <Flatpickr
+                  options={{
+                    dateFormat: 'Y-m-d',
+                    maxDate: 'today',
+                    wrap: true,
+                    allowInput: false,
+                    enableTime: false,
+                  }}
+                  value={flatpickrDate}
+                  onChange={(dates, datestring) => this.handleFlatpickrChange(datestring)}
+                >
+                  <input className={`hidden-flatpickr-input-box`} tabIndex="-1" type="text" data-input />
+                  <span className="flatpickr-input-button usa-input-inline" title="toggle" data-toggle>
+                    <Emoji symbol="📅" label="calendar"/>
+                  </span>
+                </Flatpickr>
+              </div>
             </div>
           </fieldset>
-
-          <div className='flatpickr-container'>
-            <Flatpickr
-              options={{
-                dateFormat: 'Y-m-d',
-                maxDate: 'today',
-                wrap: true,
-                allowInput: false,
-                enableTime: false,
-              }}
-              value={flatpickrDate}
-              onChange={(dates, datestring) => this.handleFlatpickrChange(datestring)}
-            >
-              <input className={`hidden-flatpickr-input-box`} tabIndex="-1" type="text" data-input />
-              <span className="flatpickr-input-button" title="toggle" data-toggle>
-                <Emoji symbol="📅" label="calendar"/>
-              </span>
-            </Flatpickr>
-          </div>
         </div>
       </div>
     );
