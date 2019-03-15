@@ -64,10 +64,10 @@ export default class TimeWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
-        console.log("Sending nothing")
+        // console.log("Sending nothing")
         this.props.onChange();
       } else {
-        console.log("Sending", formatTime(newState.value))
+        // console.log("Sending", formatTime(newState.value))
         this.props.onChange(formatTime(newState.value));
       }
     });
@@ -79,10 +79,10 @@ export default class TimeWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
-        console.log("Sending nothing")
+        // console.log("Sending nothing")
         this.props.onChange();
       } else {
-        console.log("Sending", formatTime(newState.value))
+        // console.log("Sending", formatTime(newState.value))
         this.props.onChange(formatTime(newState.value));
       }
     });
@@ -92,9 +92,9 @@ export default class TimeWidget extends React.Component {
     const {id} = this.props;
     const {hour,minute,period} = this.state.value;
 
+    // <span> state time: {formatTime({hour,minute,period})} </span><br/>
     return (
       <div className="time-widget-container">
-        <span> state time: {formatTime({hour,minute,period})} </span><br/>
         <div className='time-widget-values-container'>
           <fieldset className='date-fieldset'>
             <TimeInput
