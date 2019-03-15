@@ -1,6 +1,6 @@
 {
   "name": "@cityofaustin/usfs-components",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Custom components for USFS forms",
   "main": "build/index.js",
   "repository": "https://github.com/cityofaustin/usfs-components",
