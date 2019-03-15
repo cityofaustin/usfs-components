@@ -36,10 +36,10 @@ timeStories.addDecorator(withKnobs);
 
 timeStories
   .add('Edit', () => (
-    <TimeWidget id="root_time" value={text('Time', '9:30 pm')} />
+    <TimeWidget id="root_time" value={text('Date', '9:30 pm')} />
   ))
   .add('Review', () => (
-    <TimeReviewWidget value={text('Time', '9:30 pm')} />
+    <TimeReviewWidget value={text('Date', '9:30 pm')} />
   ));
 
 const locationStories = storiesOf('Location', module);
