@@ -25,7 +25,7 @@
 .hidden-flatpickr-input-box {
   width: 0px;
   padding: 0 0;
-  border: none;
+  border: none !important; /* uswds adds borders to add buttons on error */
   display: inline;
   font-size: 0em;
   height: 0px;
@@ -33,6 +33,7 @@
 
 .flatpickr-input-button {
   cursor: pointer;
+  border: none !important; /* uswds adds borders to add buttons on error */
 }
 
 .emoji {
