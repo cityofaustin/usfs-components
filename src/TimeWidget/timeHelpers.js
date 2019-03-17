@@ -1,7 +1,7 @@
 // timeString will be either a string in the form "12:30 AM" or undefined
 export function parseTime(timeString) {
-  if (typeof dateString === 'string') {
-    const [hour, minute, period] = dateString.split(/\:|\s/)
+  if (typeof timeString === 'string') {
+    const [hour, minute, period] = timeString.split(/\:|\s/)
     return {
       hour,
       minute,
@@ -11,7 +11,7 @@ export function parseTime(timeString) {
   return {
     hour: '',
     minute: '',
-    period: 'AM',
+    period: 'am',
   }
 }
 

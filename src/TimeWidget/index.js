@@ -15,7 +15,7 @@ export default class TimeWidget extends React.Component {
     super(props);
 
     this.state = {
-      value: parseTime(this.props.value),
+      value: parseTime(props.value),
       touched: {
         hour: false,
         minute: false,
@@ -58,9 +58,9 @@ export default class TimeWidget extends React.Component {
     set(newState, ['touched', field], true);
 
     // Autofill minute after filling hour
-    if ((field === "hour") && (this.state.value.minute === "")) {
-      set(newState, ['value', "minute"], "00");
-    }
+    // if ((field === "hour") && (this.state.value.minute === "")) {
+    //   set(newState, ['value', "minute"], "00");
+    // }
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
@@ -113,8 +113,8 @@ export default class TimeWidget extends React.Component {
               className="usa-input-inline" name={`${id}am_pm_period`} id={`${id}am_pm_period`}
               onChange={event => this.handlePeriodChange(event.target.value)}
             >
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
+              <option value="am">am</option>
+              <option value="pm">pm</option>
             </select>
           </div>
         </fieldset>
