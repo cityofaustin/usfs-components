@@ -15,7 +15,7 @@ export default class TimeWidget extends React.Component {
     super(props);
 
     this.state = {
-      value: parseTime(this.props.value),
+      value: parseTime(props.value),
       touched: {
         hour: false,
         minute: false,
@@ -58,9 +58,9 @@ export default class TimeWidget extends React.Component {
     set(newState, ['touched', field], true);
 
     // Autofill minute after filling hour
-    if ((field === "hour") && (this.state.value.minute === "")) {
-      set(newState, ['value', "minute"], "00");
-    }
+    // if ((field === "hour") && (this.state.value.minute === "")) {
+    //   set(newState, ['value', "minute"], "00");
+    // }
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {

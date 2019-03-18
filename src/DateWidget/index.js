@@ -122,7 +122,7 @@ export default class DateWidget extends React.Component {
           <fieldset className='date-fieldset'>
             <div className="usa-date-of-birth">
               <div className="usa-datefield usa-form-group usa-form-group-month">
-                <label className="input-date-label" htmlFor={`${id}Month`}>Month</label>
+                <label className="input-date-label smaller-input" htmlFor={`${id}Month`}>Month</label>
                 <input
                   className="usa-input-inline" id={`${id}Month`} name={`${id}Month`}
                   type="number" min="1" max="12" value={month}
@@ -130,7 +130,7 @@ export default class DateWidget extends React.Component {
                 />
               </div>
               <div className="usa-datefield usa-form-group usa-form-group-day">
-                <label className="input-date-label" htmlFor={`${id}Day`}>Day</label>
+                <label className="input-date-label smaller-input" htmlFor={`${id}Day`}>Day</label>
                 <input
                   className="usa-input-inline" id={`${id}Day`} name={`${id}Day`}
                   type="number" min="1" max="31" value={day}
@@ -138,7 +138,7 @@ export default class DateWidget extends React.Component {
                 />
               </div>
               <div className="usa-datefield usa-form-group usa-form-group-year usa-form-group-year-fix">
-                <label className="input-date-label" htmlFor={`${id}Year`}>Year</label>
+                <label className="input-date-label smaller-input" htmlFor={`${id}Year`}>Year</label>
                 <input
                   className="usa-input-inline" id={`${id}Year`} name={`${id}Year`}
                   type="number" min="1900" value={year}
@@ -159,7 +159,7 @@ export default class DateWidget extends React.Component {
                 >
                   <input className={`hidden-flatpickr-input-box`} tabIndex="-1" type="text" data-input />
                   <span className="flatpickr-input-button usa-input-inline" title="toggle" data-toggle>
-                    <Emoji symbol="📅" label="calendar"/>
+                    <i className="material-icons flatpickr-input-button">event</i>
                   </span>
                 </Flatpickr>
               </div>
