@@ -1,3 +1,6 @@
+ /* Import Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 .date-widget-container {
 }
 
@@ -31,9 +34,15 @@
   height: 0px;
 }
 
+.flatpickr-input-button-container {
+  border: none !important; /* uswds adds borders to add buttons on error */
+
+}
+
 .flatpickr-input-button {
   cursor: pointer;
-  border: none !important; /* uswds adds borders to add buttons on error */
+  color: #0050D8;
+  font-size: 1.5em;
 }
 
 .emoji {

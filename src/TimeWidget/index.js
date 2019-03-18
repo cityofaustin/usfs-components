@@ -113,8 +113,8 @@ export default class TimeWidget extends React.Component {
               className="usa-input-inline" name={`${id}am_pm_period`} id={`${id}am_pm_period`}
               onChange={event => this.handlePeriodChange(event.target.value)}
             >
-              <option value="am">am</option>
-              <option value="pm">pm</option>
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
             </select>
           </div>
         </fieldset>

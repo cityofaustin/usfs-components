@@ -11,7 +11,7 @@ export function parseTime(timeString) {
   return {
     hour: '',
     minute: '',
-    period: 'am',
+    period: 'AM',
   }
 }
 
