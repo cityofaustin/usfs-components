@@ -158,7 +158,7 @@ export default class DateWidget extends React.Component {
                   onChange={(dates, datestring) => this.handleFlatpickrChange(datestring)}
                 >
                   <input className={`hidden-flatpickr-input-box`} tabIndex="-1" type="text" data-input />
-                  <span className="flatpickr-input-button usa-input-inline" title="toggle" data-toggle>
+                  <span className="usa-input-inline flatpickr-input-button-container" title="toggle" data-toggle>
                     <i className="material-icons flatpickr-input-button">event</i>
                   </span>
                 </Flatpickr>
