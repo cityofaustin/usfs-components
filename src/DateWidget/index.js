@@ -119,33 +119,33 @@ export default class DateWidget extends React.Component {
       <div className="date-widget-container">
 
         <div className='date-widget-values-container'>
-          <fieldset className='date-fieldset'>
+          <fieldset className='date-fieldset' id={id}>
             <div className="usa-date-of-birth">
               <div className="usa-datefield usa-form-group usa-form-group-month">
-                <label className="input-date-label smaller-input" htmlFor={`${id}Month`}>Month</label>
+                <label className="input-date-label smaller-input" htmlFor={`${id}_Month`}>Month</label>
                 <input
-                  className="usa-input-inline" id={`${id}Month`} name={`${id}Month`}
+                  className="usa-input-inline" id={`${id}_Month`} name={`${id}_Month`}
                   type="number" min="1" max="12" value={month}
                   onChange={(event) => this.handleFormChange('month', event.target.value)}
                 />
               </div>
               <div className="usa-datefield usa-form-group usa-form-group-day">
-                <label className="input-date-label smaller-input" htmlFor={`${id}Day`}>Day</label>
+                <label className="input-date-label smaller-input" htmlFor={`${id}_Day`}>Day</label>
                 <input
-                  className="usa-input-inline" id={`${id}Day`} name={`${id}Day`}
+                  className="usa-input-inline" id={`${id}_Day`} name={`${id}_Day`}
                   type="number" min="1" max="31" value={day}
                   onChange={(event) => this.handleFormChange('day', event.target.value)}
                 />
               </div>
               <div className="usa-datefield usa-form-group usa-form-group-year usa-form-group-year-fix">
-                <label className="input-date-label smaller-input" htmlFor={`${id}Year`}>Year</label>
+                <label className="input-date-label smaller-input" htmlFor={`${id}_Year`}>Year</label>
                 <input
-                  className="usa-input-inline" id={`${id}Year`} name={`${id}Year`}
+                  className="usa-input-inline" id={`${id}_Year`} name={`${id}_Year`}
                   type="number" min="1900" value={year}
                   onChange={(event) => this.handleFormChange('year', event.target.value)}
                 />
               </div>
-              <div className='usa-datefield usa-form-group flatpickr-container'>
+              <div aria-hidden className='usa-datefield usa-form-group flatpickr-container'>
                 <Flatpickr
                   options={{
                     dateFormat: 'Y-m-d',
@@ -157,8 +157,9 @@ export default class DateWidget extends React.Component {
                   value={flatpickrDate}
                   onChange={(dates, datestring) => this.handleFlatpickrChange(datestring)}
                 >
-                  <input className={`hidden-flatpickr-input-box`} tabIndex="-1" type="text" data-input />
-                  <span className="flatpickr-input-button usa-input-inline" title="toggle" data-toggle>
+                  <label className="hidden-content" htmlFor={`${id}_calendar`}>Calendar</label>
+                  <input className="hidden-flatpickr-input-box" tabIndex="-1" type="text" data-input name={`${id}_calendar`} id={`${id}_calendar`}/>
+                  <span className="usa-input-inline flatpickr-input-button-container" title="toggle" data-toggle>
                     <i className="material-icons flatpickr-input-button">event</i>
                   </span>
                 </Flatpickr>

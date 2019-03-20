@@ -95,7 +95,7 @@ export default class TimeWidget extends React.Component {
     // <span> state time: {formatTime({hour,minute,period})} </span><br/>
     return (
       <div className="time-widget-container">
-        <fieldset className='date-fieldset'>
+        <fieldset className='date-fieldset' id={id}>
           <TimeInput
             id={id}
             type={"Hour"}
@@ -109,12 +109,13 @@ export default class TimeWidget extends React.Component {
             value={minute}
           />
           <div className="usa-datefield usa-form-group time-period-select-container">
+            <label className="hidden-content" htmlFor={`${id}_time_of_day`}>Time of Day</label>
             <select
-              className="usa-input-inline" name={`${id}am_pm_period`} id={`${id}am_pm_period`}
+              className="usa-input-inline" name={`${id}_time_of_day`} id={`${id}_time_of_day`}
               onChange={event => this.handlePeriodChange(event.target.value)}
             >
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
+              <option value="am">am</option>
+              <option value="pm">pm</option>
             </select>
           </div>
         </fieldset>

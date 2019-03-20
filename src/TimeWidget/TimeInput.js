@@ -5,9 +5,9 @@ export default function TimeInput(props) {
   const {id, type, onChange, value} = props;
   return (
     <div className="usa-datefield usa-form-group usa-form-group-day">
-      <label className="input-date-label smaller-input" htmlFor={id + type}>{type}</label>
+      <label className="input-date-label smaller-input" htmlFor={id + '_' + type}>{type}</label>
       <input
-        className="usa-input-inline" id={id + type} name={id + type}
+        className="usa-input-inline" id={id + '_' + type} name={id + '_' + type}
         type="number" step="1" pattern="^\d+$" min="0" max="60" value={value}
         onChange={(event) => onChange(type.toLowerCase(), event.target.value)}
       />
