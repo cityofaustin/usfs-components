@@ -34,6 +34,10 @@
   height: 0px;
 }
 
+.hidden-flatpickr-input-box:focus {
+  outline: none !important; /* override .usa-focus:focus styling */
+}
+
 .flatpickr-input-button-container {
   border: none !important; /* uswds adds borders to add buttons on error */
 }
@@ -77,4 +81,9 @@ input[type="number"] {
 /* Make "input-date-label" label smaller than main Date/Time label */
 .smaller-input {
   font-size: 1.6rem;
+}
+
+/* For labels only required by a screenreader. */
+.hidden-content {
+  display: none;
 }
