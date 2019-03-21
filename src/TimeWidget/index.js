@@ -94,13 +94,13 @@ export default class TimeWidget extends React.Component {
         <fieldset className='date-fieldset' id={id}>
           <TimeInput
             id={id}
-            type={"Hour"}
+            type={"__Hour"}
             onChange={this.handleTimeChange}
             value={hour}
           />
           <TimeInput
             id={id}
-            type={"Minute"}
+            type={"__Minute"}
             onChange={this.handleTimeChange}
             value={minute}
           />

@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function TimeInput(props) {
-  const {id, type, onChange, value} = props;
+  let {type} = props;
+  const {id, onChange, value} = props;
+
+  type = type.substring(2); // Hotfix to allow translation script to work. Gets rid of __ prefix
+
   return (
     <div className="usa-datefield usa-form-group usa-form-group-day">
       <label className="input-date-label smaller-input" htmlFor={id + '_' + type}>{type}</label>
