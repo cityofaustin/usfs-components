@@ -58,16 +58,14 @@ export default class TimeWidget extends React.Component {
     set(newState, ['touched', field], true);
 
     // Autofill minute after filling hour
-    // if ((field === "hour") && (this.state.value.minute === "")) {
-    //   set(newState, ['value', "minute"], "00");
-    // }
+    if ((field === "hour") && (this.state.value.minute === "")) {
+      set(newState, ['value', "minute"], "00");
+    }
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
-        // console.log("Sending nothing")
         this.props.onChange();
       } else {
-        // console.log("Sending", formatTime(newState.value))
         this.props.onChange(formatTime(newState.value));
       }
     });
@@ -79,10 +77,8 @@ export default class TimeWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
-        // console.log("Sending nothing")
         this.props.onChange();
       } else {
-        // console.log("Sending", formatTime(newState.value))
         this.props.onChange(formatTime(newState.value));
       }
     });

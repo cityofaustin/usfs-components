@@ -83,10 +83,8 @@ export default class DateWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
-        // console.log("Sending nothing")
         this.props.onChange();
       } else {
-        // console.log("Sending", formatISOPartialDate(newState.value))
         this.props.onChange(formatISOPartialDate(newState.value));
       }
     });
@@ -99,10 +97,8 @@ export default class DateWidget extends React.Component {
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
-        // console.log("Sending nothing")
         this.props.onChange();
       } else {
-        // console.log("Sending", formatISOPartialDate(newState.value))
         this.props.onChange(formatISOPartialDate(newState.value));
       }
     })
