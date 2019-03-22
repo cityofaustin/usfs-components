@@ -140,6 +140,10 @@ html body.sb-show-main div#root div div.mapboxgl-map div.mapboxgl-control-contai
   min-width: 75%;
 }
 
+.mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-in, .mapboxgl-ctrl-icon.mapboxgl-ctrl-zoom-out {
+  margin-left: 5px;
+}
+
 /* icons */
 .geocoder-icon {
   display:inline-block;
