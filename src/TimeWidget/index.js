@@ -94,15 +94,17 @@ export default class TimeWidget extends React.Component {
         <fieldset className='date-fieldset' id={id}>
           <TimeInput
             id={id}
-            type={"__Hour"}
+            type={"Hour"}
             onChange={this.handleTimeChange}
             value={hour}
+            label={"Hour"}
           />
           <TimeInput
             id={id}
-            type={"__Minute"}
+            type={"Minute"}
             onChange={this.handleTimeChange}
             value={minute}
+            label={"Minute"}
           />
           <div className="usa-datefield usa-form-group time-period-select-container">
             <label className="hidden-content" htmlFor={`${id}_time_of_day`}>Time of Day</label>
