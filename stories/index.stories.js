@@ -17,6 +17,7 @@ import FileUploadWidget from '../src/FileUploadWidget';
 import FileUploadReviewWidget from '../src/FileUploadReviewWidget';
 import OfficerDetailsDisplayWidget from '../src/OfficerDetailsDisplayWidget';
 import WitnessDetailsDisplayWidget from '../src/WitnessDetailsDisplayWidget';
+import LargeTextAreaReviewWidget from '../src/LargeTextAreaReviewWidget';
 
 import '../node_modules/uswds/dist/css/uswds.min.css';
 
@@ -83,3 +84,9 @@ storiesOf('Officer Details', module).add('Display', () => (
 storiesOf('Witness Details', module).add('Display', () => (
   <WitnessDetailsDisplayWidget />
 ));
+
+const largeTextAreaStories = storiesOf('LargeTextArea', module);
+largeTextAreaStories
+  .add('Review', ()=>(
+    <LargeTextAreaReviewWidget value={require('./loren.js').value}/>
+  ))

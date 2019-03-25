@@ -8,6 +8,7 @@ import FileUploadWidget from './FileUploadWidget';
 import FileUploadReviewWidget from './FileUploadReviewWidget';
 import OfficerDetailsDisplayWidget from './OfficerDetailsDisplayWidget';
 import WitnessDetailsDisplayWidget from './WitnessDetailsDisplayWidget';
+import LargeTextAreaReviewWidget from './LargeTextAreaReviewWidget';
 
 export {
   DateWidget,
@@ -20,4 +21,5 @@ export {
   FileUploadReviewWidget,
   OfficerDetailsDisplayWidget,
   WitnessDetailsDisplayWidget,
+  LargeTextAreaReviewWidget,
 };
