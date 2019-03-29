@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Emoji from '../Emoji';
 import Flatpickr from 'react-flatpickr';
+import { isAfter } from 'date-fns';
 import { set, cloneDeep } from 'lodash';
 
-import {formatYear, formatDayMonth, parseISODate, formatISOPartialDate} from './dateHelpers';
+import {formatYear, formatDayMonth, parseISODate, formatISOPartialDate, setValidDate} from './dateHelpers';
 
 import 'flatpickr/dist/themes/material_green.css';
 import './DateWidget.css';
@@ -76,15 +77,32 @@ export default class DateWidget extends React.Component {
       (
         ((field === "day") && (!!this.state.value.month)) ||
         ((field === "month") && (!!this.state.value.day))
-      ) && (this.state.value.year === "")
+      ) && (!this.state.value.year)
     ) {
-      set(newState, ['value', "year"], currentYear);
+      const isDateFromLastYear = isAfter(
+        new Date(currentYear, newState.value.month-1, newState.value.day),
+        new Date(new Date())
+      );
+      const autofillYear = isDateFromLastYear ? currentYear-1 : currentYear;
+      console.log("Setting an autofillYear", autofillYear)
+      set(newState, ['value', "year"], autofillYear);
+    }
+
+    // If all 3 values are filled out, make sure they are a valid day
+    if (
+      !!newState.value.year &&
+      !!newState.value.day &&
+      !!newState.value.month
+    ) {
+      newState = setValidDate(newState);
     }
 
     this.setState(newState, () => {
       if (this.isIncomplete(newState.value)) {
+        console.log("hello your date is: ~~~NOTHING~~~")
         this.props.onChange();
       } else {
+        console.log("hello your date is:", formatISOPartialDate(newState.value))
         this.props.onChange(formatISOPartialDate(newState.value));
       }
     });

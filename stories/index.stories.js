@@ -25,10 +25,10 @@ dateStories.addDecorator(withKnobs);
 
 dateStories
   .add('Edit', () => (
-    <DateWidget id="root_date" value={text('Date', '2018-11-11')} />
+    <DateWidget id="root_date" value={text('Date', '2018-11-22')} />
   ))
   .add('Review', () => (
-    <DateReviewWidget value={text('Date', '2018-11-11')} />
+    <DateReviewWidget value={text('Date', '2018-11-22')} />
   ));
 
 const timeStories = storiesOf('Time', module);
