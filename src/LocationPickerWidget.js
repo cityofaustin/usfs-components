@@ -15,7 +15,7 @@ const Map = ReactMapboxGl({
 const geocoderControl = new MapboxGeocoder({
   accessToken:
     'pk.eyJ1IjoiY3Jvd2VhdHgiLCJhIjoiY2o1NDFvYmxkMHhkcDMycDF2a3pseDFpZiJ9.UcnizcFDleMpv5Vbv8Rngw',
-  placeholder: 'Enter a location here',
+  placeholder: 'Enter a location',
 
   // bounding box restricts results to Travis County
   bbox: [-98.173053, 30.02329, -97.369564, 30.627918],
@@ -58,7 +58,8 @@ class SelectLocationMap extends Component {
   }
 
   onDragStart(map) {
-    // debugger;
+    debugger;
+    map._controls[3]._clear()
     this.setState({
       showPin: false,
     });
@@ -244,7 +245,32 @@ export default class LocationPickerWidget extends React.Component {
           };
 
           const valueJSON = JSON.stringify(location);
-          geocoderControl.setInput(location.address);
+          if(!geocoderControl._inputEl.value) {
+                      geocoderControl.setInput(location.address);
+          }
+
+          console.log(location);
+
+          geocoderControl.on('results', function(e) {
+  console.log('results: ', e.features);
+});
+
+geocoderControl.on('result', function(e) {
+  console.log('result: ', e.result);
+});
+
+geocoderControl.on('clear', function(e) {
+  console.log('clear');
+});
+
+geocoderControl.on('loading', function(e) {
+  console.log('loading:', e.query);
+});
+
+geocoderControl.on('error', function(e) {
+  console.log('Error is', e.error);
+});
+
           this.props.onChange(valueJSON);
         });
       },
